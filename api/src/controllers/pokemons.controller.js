@@ -1,90 +1,90 @@
+//const fetch = require('node-fetch');
+const axios = require('axios');
 const { Pokemon, Type } = require("../db"); 
-const fetch = require("node-fetch");
 
 //Obtengo info de url para tener la info de la API
 const getApiInfo = async () => {
-    const apiUrl = await fetch.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40`)
-    const data = await apiUrl.json();
-    
-    const db = await Pokemon.findAll({include: Type}); 
-    //uso include para hacer un join entre Pokemon y Type
-    
-    //Concateno para unir db con la info que viene de la api
-    let dataAndApi = [...db, ...data.results]
+    //Aca voy a poner toda la info de todos los poke con el forEach
+    let pokemonsApi = [];
 
-    //Aca voy a poner toda la info de todos los poke con el for
-    let pokemonInfo = [];
-
-    for(let i= 0; i< dataAndApi.length; i++){
-        if(!dataAndApi[i]) return pokemonInfo;
+    //Traigo name y url de los primeros 40 poke
+    const apiUrl = await axios.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40`)
+    //const data = await apiUrl.json();
         
-        if(dataAndApi.url){ //si trabajo con info de api
-            const onePokemon = await fetch(dataAndApi[i].url);
-            const dataOnePokemon = await onePokemon.json();
-            
-            pokemonInfo.push({
-                id: dataOnePokemon.forms.id,
-                name: dataOnePokemon.name,
-                hp: dataOnePokemon.stats[0].base_stat,
-                attack: dataOnePokemon.stats[1].base_stat,
-                defense: dataOnePokemon.stats[2].base_stat,
-                speed: dataOnePokemon.stats[5].base_stat,
-                height: dataOnePokemon.height,
-                weight: dataOnePokemon.weight,
-                img: dataOnePokemon.sprites.front_default,
-                type: dataOnePokemon.types.type.name
-            })
-        } else { //si no tiene url trabajo con info de DB
-            pokemonInfo.push({
-                id: dataAndApi[i].id,
-                name: dataAndApi[i].name,
-                hp: dataAndApi[i].hp,
-                attack: dataAndApi[i].attack,
-                defense: dataAndApi[i].defense,
-                speed: dataAndApi[i].speed,
-                height: dataAndApi[i].height,
-                weight: dataAndApi[i].weight,
-                image: dataAndApi[i].image,
-                type:  dataAndApi[i].,
-            })
+    //pusheo el contenido de cada poke en pokemonsApi
+    apiUrl.data.results.forEach(el => {
+        pokemonsApi.push(axios.get(el.url)
+        .then(res => res.data)
+        )
+    })
+
+    const apiInfo = Promise.all(pokemonsApi)
+    .then(res => res.map(poke => { //tomo la respuesta de la promesa y para cada poke busco la info necesaria
+        const infoPoke = { 
+            id: poke.id,
+            name: poke.name,
+            hp: poke.stats[0].base_stat,
+            attack: poke.stats[1].base_stat,
+            defense: poke.stats[2].base_stat,
+            speed: poke.stats[5].base_stat,
+            height: poke.height,
+            weight: poke.weight,
+            img: poke.sprites.other.dream_world.front_default,
+            type: poke.types.map(el => el.type.name), //para cada poke va a ir a tyes y va a mapear y devolver el nombre del type q tenga ese poke
         }
-    }
+        return infoPoke;
+    }))
+    return await apiInfo   
+}
+
+//VER SI HACE FALTA USAR attributes
+const getDBInfo = async () => {
+    return await Pokemon.findAll({include: Type});     
     
-    return pokemonInfo;
 }
 
-export const getPokemons = async (req, res) =>{
-    try{
-        const pokemons = await Pokemon.findAll()
-        res.json(pokemons)
-    } catch(error){
-        return res.status(500).json({ message: error.message })
-    }
-};
+const getAllPokemons = async () => {
+    let allPokemons = [];
+    let apiPokemons =  await getApiInfo();
+    let dbPokemons = await getDBInfo();
 
-export const getPokemon = async (req, res) => {
-    try{
-        const { id, name } = req.params;
-        const pokemon = await Pokemon.findOne({
-            where: {
-                [Op.or]: [
-                    { id: id },
-                    { name: name }
-                ]
-            }
-        });
-        if(!pokemon) {
-            return res.status(404).json({ message: "That Pokemon does not exists." })
-        }
-
-    } catch(error){
-        return res.status(500).json({ message: error.message })
-    }
+    //Concateno para unir db con la info que viene de la api
+    allPokemons = [...apiPokemons, ...dbPokemons];
+    console.log('All pokemons:', allPokemons)
+    return allPokemons
 }
 
-export const createPokemons = async (req, res) =>{
+// const getPokemonById = async () => {
+//     try{
+//         const { id  } = req.params;
+//         let apiPokemons =  await getApiInfo();
+
+//         //veo si ese id existe en api para ver si trabajo con api o con db
+//        if(apiPokemons.find((a) => a.id === id)){
+//             const pokemonInApi = apiPokemons.filter((a) => a.id === id)
+            
+//             res.json(pokemonInApi);
+//             if(!pokemonInApi) {
+//                 return res.status(404).json({ message: "That Pokemon does not exists." })
+//             }
+//         } else {
+//             const pokemonInDb = await Pokemon.findOne({
+//                 where:
+//                 { id: id },            
+//             });
+//             res.json(pokemonInDb);
+//             if(!pokemonInDb) {
+//                 return res.status(404).json({ message: "That Pokemon does not exists." })
+//             }
+//         }
+//     } catch(error){
+//         return res.status(500).json({ message: error.message })
+//     }
+// }
+
+
+const createPokemons = async (req, res) =>{
   const { id, name, attack, defense, speed, hp, height, weight } = req.body;
-  
   try{
     const newPokemon = await Pokemon.create({
         id, 
@@ -102,7 +102,8 @@ export const createPokemons = async (req, res) =>{
     }
 }
 
-export const updatePokemons = async (req, res) =>{
+//SOLO SIRVE PA ACTUALIZAR LOS De LA DB. VER COMO HACER PARA Q SIRVA PARA API
+const updatePokemons = async (req, res) =>{
     try {
         const { id } = req.params;
         const { name, attack, defense, speed, hp, height, weight } = req.body;
@@ -125,7 +126,7 @@ export const updatePokemons = async (req, res) =>{
     }
 }
 
-export const deletePokemons = async (req, res) =>{
+const deletePokemons = async (req, res) =>{
     try{
         const { id } = req.params;
         await Pokemon.destroy({
@@ -137,4 +138,13 @@ export const deletePokemons = async (req, res) =>{
     } catch(error){
         return res.status(500).json({ message: error.message });
     }
+}
+
+module.exports = {
+    getAllPokemons,
+    updatePokemons,
+    createPokemons,
+    deletePokemons,
+    //getPokemonById,
+    //getPokemonByName
 }

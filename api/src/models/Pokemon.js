@@ -6,13 +6,14 @@ module.exports = (sequelize) => {
   sequelize.define('pokemon', {
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     attack: {
       type: DataTypes.INTEGER,
@@ -46,8 +47,8 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       validate: {
         isNumeric: {msg: 'It must be an integer number.'},
-        defaultValue: 40, 
-      }
+      },
+      defaultValue: 40, 
     },
     weight: {
       type: DataTypes.INTEGER,
