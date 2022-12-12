@@ -35,20 +35,13 @@ router.get('/', async (req, res) => {
 
 //Ruta para traer el detalle del poke con el id de params
 router.get('/:id', async (req, res) =>{
-    const { id  } = req.params;
-    let pokeById = await getAllPokemons(); //traigo todos los poke
-    try{
-        if(id){ //si me pasaron un id valido, filtro y devuelvo
-            let pokeName = pokeById.find((poke) => poke.id === id)
-            if(pokeName.length){
-                res.status(200).send(pokeName)
-            } else { //si el id no es valido devuelvo mensaje.
-                res.status(404).send('I am sorry, we couldnt find that pokemon.');
-            }
+    const { id } = req.params;
+    const pokeById = await getAllPokemons(); //traigo todos los poke
+
+    if(id){ //si me pasaron un id valido, filtro y devuelvo
+        let pokeName = pokeById.filter(poke => poke.id == id)
+        pokeName.length ? res.status(200).json(pokeName) : res.status(404).send('I am sorry, we couldnt find that pokemon.');  //si el id no es valido devuelvo mensaje.
         }
-    } catch(error){
-        return res.status(500).json({ message: error.message })
-    }
 });
 
 
