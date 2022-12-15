@@ -1,14 +1,28 @@
 import React from 'react'
 import s from './PokeCard.module.css'
 import { Link } from "react-router-dom";
+//import { useDispatch } from "react-redux";
+//import * as actions from '../../redux/actions'
 
 export default function PokeCard(props) {
-    
   return (
     <div className={s.pokeCard}>
-        <Link className={s.pokeLink} to={`/pokemons/id`}><h2 className={s.cardTitle}>{props.name}</h2></Link>
+        <Link className={s.pokeLink} to={`/pokemons/${props.id}`}><h2 className={s.cardTitle}>{props.name} - #{props.id}</h2></Link>
         <img className={s.PokeImage} src={props.image} alt={props.name} />
+        {props.type.length === 2 ? (
+          <div className={s.types}>
+            <p className={s.PokeInfo}>
+              {props.type[0]}, {props.type[1]}
+            </p>
+            
+          </div>
+        ) : (
+          <div className={s.types}>
+          <p className={s.PokeInfo}>
+            {props.type[0]}
+          </p>
+          </div>
+        )}
     </div>
   )
 }
-/*update y delete deberian estar activos solo si fueron creados en la db*/

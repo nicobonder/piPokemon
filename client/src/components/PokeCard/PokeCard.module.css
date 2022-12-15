@@ -1,7 +1,7 @@
 .pokeCard{
     height: 9rem;
     width: 9rem;
-    margin: 0.5rem;
+    margin: 0.4rem;
     padding: 0.5rem;
     background: rgba(255, 255, 255, 0.4);
     border-radius: 0.3rem;
@@ -12,6 +12,7 @@
     flex-direction: column;
     align-items: center;
     justify-items: center;
+    z-index: 10;
 }
 
 .PokeImage{
@@ -20,10 +21,9 @@
 }
 
 .cardTitle{
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 0.2rem;
     color: black;
- 
 }
 
 .pokeLink{
@@ -31,3 +31,4 @@
     color: black;
     cursor: pointer;
 }
+
