@@ -1,6 +1,6 @@
 .pokeCard{
-    height: 9rem;
-    width: 9rem;
+    height: 10rem;
+    width: 10rem;
     margin: 0.4rem;
     padding: 0.5rem;
     background: rgba(255, 255, 255, 0.4);
@@ -32,3 +32,6 @@
     cursor: pointer;
 }
 
+.types p {
+    font-weight: 600;
+}

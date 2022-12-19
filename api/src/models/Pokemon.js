@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
@@ -9,6 +10,7 @@ module.exports = (sequelize) => {
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true,
+
     },
     name: {
       type: DataTypes.STRING,
@@ -33,8 +35,8 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       validate: {
         isNumeric: {msg: 'It must be an integer number.'},
-        defaultValue: 50, 
-      }
+      },
+      defaultValue: 50, 
     },
     hp: {
       type: DataTypes.INTEGER,
@@ -48,7 +50,7 @@ module.exports = (sequelize) => {
       validate: {
         isNumeric: {msg: 'It must be an integer number.'},
       },
-      defaultValue: 40, 
+      defaultValue: 4, 
     },
     weight: {
       type: DataTypes.INTEGER,
@@ -57,13 +59,16 @@ module.exports = (sequelize) => {
       },
       defaultValue: 20, 
     },
-    image: {
+    img: {
       type: DataTypes.STRING,
-      defaultValue: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fbr.pinterest.com%2Fpin%2F720646377863963523%2F&psig=AOvVaw07k5kVYyySuvC5Gtcla0LP&ust=1670513276352000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCPDv0IXp5_sCFQAAAAAdAAAAABAJ",
+      defaultValue: "https://i.pinimg.com/564x/43/ed/d5/43edd5aa5f0de7f410f5e38326f4b94c.jpg",
     },
     createdInDB: {
       type: DataTypes.BOOLEAN,
+      allowNull: false,
       defaultValue: true
     }
+  }, {
+    timestamps: false
   });
 };

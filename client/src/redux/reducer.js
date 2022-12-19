@@ -4,10 +4,8 @@ import {
     CREATE_POKEMON,
     DELETE_POKEMON,
     GET_TYPES,
-    SORT_BY_ALPHABET_ASC,
-    SORT_BY_ALPHABET_DES,
-    SORT_BY_ATTACK_ASC,
-    SORT_BY_ATTACK_DES,
+    SORT_BY_ALPHABET,
+    SORT_BY_ATTACK,
     FILTER_BY_CREATED,
     FILTER_BY_TYPE,
     SEARCH_POKEMON
@@ -17,6 +15,7 @@ const initialState = {
     pokemons: [],
     pokemonDetail: {},
     types: [],
+    filterByType: null
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -46,34 +45,59 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 types: action.payload
             }
-        case SORT_BY_ALPHABET_ASC:
-            const sortAsc  = action.payload.sort((a, b) => (a.name < b.name ? 1 : a.name > b.name ? -1 : 0)); 
-        return{
-            ...state,
-            pokemons: sortAsc,
-        }
-        case SORT_BY_ALPHABET_DES:
-            const sortDes  = action.payload.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0)); 
-        return{
-            ...state,
-            pokemons: sortDes
-        }
-        case SORT_BY_ATTACK_ASC:
-            const sortAttackAsc  = action.payload.sort((a, b) => (a.attack < b.attack ? 1 : a.attack > b.attack ? -1 : 0)); 
-            return{
+        case SORT_BY_ALPHABET:
+            let sortAlpha = action.payload === 'asc' ?
+            state.pokemons.sort(function(a, b){
+                if(a.name.toLowerCase() > b.name.toLowerCase()) {
+                    return 1;
+                }
+                if(b.name.toLowerCase() > a.name.toLowerCase()) {
+                    return -1;
+                }
+                return 0;
+            }) :
+            state.pokemons.sort(function(a, b){
+                if(a.name.toLowerCase() > b.name.toLowerCase()) {
+                    return -1;
+                }
+                if(b.name.toLowerCase() > a.name.toLowerCase()) {
+                    return 1;
+                }
+                return 0;
+            })
+            return {
                 ...state,
-                pokemons: sortAttackAsc,
+            pokemons: sortAlpha,
         }
-        case SORT_BY_ATTACK_DES:
-            const sortAttackDes  = action.payload.sort((a, b) => (a.attack < b.attack ? -1 : a.attack > b.attack ? 1 : 0));
-        return{
-            ...state,
-            pokemons: sortAttackDes
+        case SORT_BY_ATTACK:
+            let sortAttack = action.payload === 'max' ?
+            state.pokemons.sort(function(a, b){
+                if(a.attack < b.attack) {
+                    return 1;
+                }
+                if(b.attack < a.attack) {
+                    return -1;
+                }
+                return 0;
+            }) :
+            state.pokemons.sort(function(a, b){
+                if(a.attack < b.attack) {
+                    return -1;
+                }
+                if(b.attack < a.attack) {
+                    return 1;
+                }
+                return 0;
+            })
+            return {
+                ...state,
+                pokemons: sortAttack,
         }
         case FILTER_BY_TYPE:
+            console.log('filterByType', action.payload)
         return{
             ...state,
-            pokemons: action.payload
+            filterByType: action.payload
         }
         case FILTER_BY_CREATED:
         return{

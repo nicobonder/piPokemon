@@ -4,7 +4,7 @@ const router = Router();
 
 const { 
     getAllPokemons,
-    createPokemons, 
+    createPokemon, 
     updatePokemons, 
     deletePokemons, 
     //getPokemonById,
@@ -46,7 +46,7 @@ router.get('/:id', async (req, res) =>{
 
 
 //Ruta de creacion
-router.post('/', createPokemons);
+router.post('/', (createPokemon));
 //Ruta ruta para actualizar un proyecto
 router.put('/:id', updatePokemons);
 //Ruta para borrar un proyecto

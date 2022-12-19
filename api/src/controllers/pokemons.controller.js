@@ -8,11 +8,10 @@ const getApiInfo = async () => {
 
     //Traigo name y url de los primeros 40 poke
     const apiUrl = await axios.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=40`)
-    //const data = await apiUrl.json();
         
     //pusheo el contenido de cada poke en pokemonsApi
     apiUrl.data.results.forEach(el => {
-        pokemonsApi.push(axios.get(el.url)
+        pokemonsApi.push(axios.get(el.url) //necesito ingresar al url de cada uno para tener los detalles de los poke
         .then(res => res.data)
         )
     })
@@ -29,7 +28,7 @@ const getApiInfo = async () => {
             height: poke.height,
             weight: poke.weight,
             img: poke.sprites.other.dream_world.front_default,
-            type: poke.types.map(el => el.type.name), //para cada poke va a ir a tyes y va a mapear y devolver el nombre del type q tenga ese poke
+            types: poke.types.map(el => el.type.name), //para cada poke va a ir a [types] y va a mapear y devolver el nombre del type q tenga ese poke
         }
         return infoPoke;
     }))
@@ -38,8 +37,8 @@ const getApiInfo = async () => {
 
 //VER SI HACE FALTA USAR attributes
 const getDBInfo = async () => {
-    return await Pokemon.findAll({include: Type});     
-    
+    const infoDB = await Pokemon.findAll({include: 'types'});
+    return infoDB.map((el) => el.dataValues);
 }
 
 const getAllPokemons = async () => {
@@ -53,49 +52,33 @@ const getAllPokemons = async () => {
     return allPokemons
 }
 
-// const getPokemonById = async () => {
-//     try{
-//         const { id  } = req.params;
-//         let apiPokemons =  await getApiInfo();
-
-//         //veo si ese id existe en api para ver si trabajo con api o con db
-//        if(apiPokemons.find((a) => a.id === id)){
-//             const pokemonInApi = apiPokemons.filter((a) => a.id === id)
-            
-//             res.json(pokemonInApi);
-//             if(!pokemonInApi) {
-//                 return res.status(404).json({ message: "That Pokemon does not exists." })
-//             }
-//         } else {
-//             const pokemonInDb = await Pokemon.findOne({
-//                 where:
-//                 { id: id },            
-//             });
-//             res.json(pokemonInDb);
-//             if(!pokemonInDb) {
-//                 return res.status(404).json({ message: "That Pokemon does not exists." })
-//             }
-//         }
-//     } catch(error){
-//         return res.status(500).json({ message: error.message })
-//     }
-// }
-
-
-const createPokemons = async (req, res) =>{
-  const { id, name, attack, defense, speed, hp, height, weight } = req.body;
+const createPokemon = async (req, res) =>{
+  const { id, name, img, attack, defense, speed, hp, height, weight, types, createdInDB } = req.body;
   try{
-    const newPokemon = await Pokemon.create({
-        id, 
+    let newPokemon = await Pokemon.create({ 
+        id,
         name, 
+        img,
         attack, 
         defense, 
         speed, 
         hp, 
         height, 
         weight,
+        createdInDB
     });
-    res.json(newPokemon);
+   // Dentro del modelo Type busco los types que coincidan con los que vienen por body
+    let typeDB = await Type.findAll(
+        {   
+            where: {                       
+                    name: types,
+                }
+            }
+        )
+       // asocio el nuevo poke con el type q traje de DB. add es un metodo de sequelize para asociar modelos.
+        await newPokemon.addTypes(typeDB); 
+        res.json(newPokemon)
+        
   } catch(error){
         return res.status(500).json({ message: error.message })
     }
@@ -142,7 +125,7 @@ const deletePokemons = async (req, res) =>{
 module.exports = {
     getAllPokemons,
     updatePokemons,
-    createPokemons,
+    createPokemon,
     deletePokemons,
     //getPokemonById,
     //getPokemonByName

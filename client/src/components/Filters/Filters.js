@@ -1,40 +1,47 @@
-import React from 'react';
-import s from './Filters.module.css';
+import React, { useState } from "react";
+import s from "./Filters.module.css";
 
-import { filterByType } from '../../redux/actions';
-import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '../../redux/actions'
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from "../../redux/actions";
 
 export default function Filters() {
   const [selectValue, setSelectValue] = React.useState("");
-  
+  const [/*orden*/, setOrden] = useState("");
   // const handlechange = (event) => {
   //   const value = event.target.value;
   //   setSelectValue(value);
   // };
 
   const dispatch = useDispatch();
-  const pokemons = useSelector((state)=> state.pokemons);
+  const pokemons = useSelector((state) => state.pokemons);
   //const types = useSelector((state) => state.types);
 
   React.useEffect(() => {
-    if(!pokemons[0]){
+    if (!pokemons[0]) {
       dispatch(actions.getPokemons());
       dispatch(actions.getTypes());
     }
   }, [dispatch, pokemons]);
 
-  // function handleClick(e){           
-  //   e.preventDefault();             
-  //   dispatch(actions.getPokemons())         
-  // };
+  function handleClick(e){
+    e.preventDefault();
+    dispatch(actions.getPokemons())
+    console.log('resetear filtros')
+  };
 
   function handleFilterType(e) {
+    e.preventDefault();
     const value = e.target.value;
     setSelectValue(value);
-    dispatch(filterByType(value))
+    dispatch(actions.filterByType(value));
   }
 
+  function handleSortByAlpha(e) {
+    e.preventDefault();
+    dispatch(actions.sortByAlphabet(e.target.value));
+    setOrden(`Ordenado ${e.target.value}`)
+    console.log('ordenado por alfabeto')
+  }
 
   return (
     <div className={s.filterSection}>
@@ -42,9 +49,15 @@ export default function Filters() {
         <h2 className={s.filterTitle}>Filters</h2>
         <div className={s.filterBy}>
           <h3 className={s.filterSubitle}>Filter by type</h3>
-          
-          <select className={s.select} value='default' onChange={e => handleFilterType(e)}>
-            <option value='default' disabled hidden>Pokemon type</option>
+
+          <select
+            className={s.select}
+            value="default"
+            onChange={(e) => handleFilterType(e)}
+          >
+            <option value="default" disabled hidden>
+              Pokemon type
+            </option>
             <option value="bug">bug</option>
             <option value="dark">dark</option>
             <option value="dragon">dragon</option>
@@ -57,6 +70,7 @@ export default function Filters() {
             <option value="grass">grass</option>
             <option value="ground">ground</option>
             <option value="ice">ice</option>
+            <option value="normal">normal</option>
             <option value="poison">poison</option>
             <option value="psychic">psychic</option>
             <option value="rock">rock</option>
@@ -65,20 +79,40 @@ export default function Filters() {
             <option value="unknow">unknow</option>
             <option value="water">water</option>
           </select>
-          {selectValue && <h2 className="mt-3">{selectValue}</h2>}
+          {selectValue && <h2 className={s.showFilter}>{selectValue}</h2>}
         </div>
       </div>
-        <div className={s.filterBy}>
-          <h3 className={s.filterSubitle}>Created in</h3>
-          <select className={s.select} value='default' >
-            <option value='default' disabled hidden>Created in</option>
-            <option value="API">API</option>
-            <option value="Data Base">Data Base</option>
-          </select>
-        </div>    
+      
+      <div className={s.filterBy}>
+        <h3 className={s.filterSubitle}>Created in</h3>
+        <select className={s.select} value="default">
+          <option value="default" disabled hidden>
+            Created in
+          </option>
+          <option value="API">API</option>
+          <option value="Data Base">Data Base</option>
+        </select>
       </div>
-    
-  )
+      
+      <div className={s.filters}>
+        <div className={s.filterBy}>
+          <h3>Sort by Alphabet</h3>
+          <select
+            value="default"
+            onChange={(e) => handleSortByAlpha(e)}
+          >
+            <option value="default" disabled hidden>
+              Sort by Alphabet
+            </option>
+            <option value="asc">From A to Z</option>
+            <option value="desc">From Z to A</option>
+          </select>
+        </div>
+      </div>
+      <button onClick={(e) => {handleClick(e)}}>Reset filters</button>
+    </div>
+
+  );
 }
 
 //filtro por type

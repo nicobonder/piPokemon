@@ -11,26 +11,32 @@ import Filters from '../Filters/Filters';
 export default function Pokemons() {
   const dispatch = useDispatch();
   const pokemons = useSelector((state)=> state.pokemons);
+  const filterByType = useSelector((state)=> state.filterByType);
 
   React.useEffect(() => {(
     dispatch(actions.getPokemons())
   )},[dispatch])
 
+  console.log('filteredBytype', filterByType)
   return (
     <div className={s.pokemonsSection}>
       <Filters />
       <div className={s.allPokemons}>
         {
-          pokemons.map(poke =>{
+          pokemons.filter((el) => filterByType ? el.types.includes(filterByType) : true ).map(poke =>{
             return <PokeCard 
             key={poke.id} 
             id={poke.id} 
             name={poke.name} 
             image={poke.img} 
-            type={poke.type} />
+            types={poke.types}/>
           })
         }
+
+       
       </div>
-    </div>
+    </div>  
   )
 }
+
+

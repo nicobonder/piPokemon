@@ -5,19 +5,17 @@ export const DELETE_POKEMON = "CREATE_POKEMON";
 export const GET_TYPES = "GET_TYPES";
 
 //Filtos y ordenamiento
-export const SORT_BY_ALPHABET_ASC = "SORT_BY_ALPHABET_ASC";
-export const SORT_BY_ALPHABET_DES = "SORT_BY_ALPHABET_DES";
-export const SORT_BY_ATTACK_ASC = "SORT_BY_ATTACK_ASC";
-export const SORT_BY_ATTACK_DES = "SORT_BY_ATTACK_DES";
-
 export const FILTER_BY_TYPE = "FILTER_BY_TYPE";
 export const FILTER_BY_CREATED = "FILTER_BY_CREATED";
+export const SORT_BY_ALPHABET = "SORT_BY_ALPHABET";
+export const SORT_BY_ATTACK = "SORT_BY_ATTACK";
 
 export const SEARCH_POKEMON = "SEARCH_POKEMON";
 
 
 export const getPokemons = () => {
     return function(dispatch) {
+        
         return fetch('http://localhost:3001/pokemons')
         .then(res => res.json())
         .then(pokemons => dispatch(
@@ -38,8 +36,7 @@ export const getPokemonDetail = (id) => {
 };
 
 export const createPokemon = (pokemon) => {
-    //pokemon.id = id++;
-    return{ type: CREATE_POKEMON, payload: pokemon}
+    return { type: CREATE_POKEMON, payload: pokemon}
 };
 
 export const deletePokemon = (id) => {
@@ -54,35 +51,28 @@ export const getTypes = () => {
             let types = [];
             pokemons.map((pokemon) => types.push(pokemon.ship))
             dispatch ({type: GET_TYPES, payload: types})
-
         }
         )
     }
 };
 
-export const sortByAlphabetAsc = (pokemons) => {
-    //const { rootReducer } = getstate()
-    return ({type: SORT_BY_ALPHABET_ASC, payload: pokemons});
+export const sortByAlphabet = (payload) => {
+    return ({type: SORT_BY_ALPHABET, payload});
 }
 
-export const sortByAlphabetDes = (pokemons) => {
-    return {type: SORT_BY_ALPHABET_DES, payload: pokemons}
+export const sortByAttack = (payload) => {
+    return {type: SORT_BY_ATTACK, payload}
 }
 
-export const sortByAttackAsc = (pokemons) => {
-    return {type: SORT_BY_ATTACK_ASC, payload: pokemons}
-}
-
-export const sortByAttackDes = (pokemons) => {
-    return {type: SORT_BY_ATTACK_DES, payload: pokemons}
-}
-
-export const filterByType = (query) => (dispatch, getstate) => {
-    const { pokemons } = getstate()
+// export const filterByType = (query) => ( getstate) => {
+//     const { pokemons } = getstate()
     
-    let resultType = pokemons.filter((p) => p.type.toLowerCase().includes(query.toLowerCase()))
+//     let resultType = pokemons.filter((p) => p.type.toLowerCase().includes(query.toLowerCase()))
 
-    dispatch ({type: FILTER_BY_TYPE, payload: resultType})
+//     return ({type: FILTER_BY_TYPE, payload: resultType})
+// }
+export const filterByType = (filter) => {
+    return {type: FILTER_BY_TYPE, payload: filter}
 }
 
 // export const filterByCreated = (query) => (dispatch, getstate) => {

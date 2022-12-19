@@ -9,18 +9,17 @@ export default function PokeCard(props) {
     <div className={s.pokeCard}>
         <Link className={s.pokeLink} to={`/pokemons/${props.id}`}><h2 className={s.cardTitle}>{props.name} - #{props.id}</h2></Link>
         <img className={s.PokeImage} src={props.image} alt={props.name} />
-        {props.type.length === 2 ? (
+        {props.types.length === 2 ? (
           <div className={s.types}>
             <p className={s.PokeInfo}>
-              {props.type[0]}, {props.type[1]}
+              {props.types[0]}, {props.types[1]}
             </p>
-            
           </div>
         ) : (
           <div className={s.types}>
-          <p className={s.PokeInfo}>
-            {props.type[0]}
-          </p>
+            <p className={s.PokeInfo}>
+              {props.types[0]}
+            </p>
           </div>
         )}
     </div>
