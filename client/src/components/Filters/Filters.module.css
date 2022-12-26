@@ -38,3 +38,41 @@
 .filterSubitle{
     margin-bottom: 0.5rem;
 }
+
+select {
+    border-radius: 0.2rem;
+    height: 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+option {
+    border-radius: 0.2rem;
+    height: 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.filterBtn{
+    background: rgb(2,0,36);
+    background: linear-gradient(138deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
+    text-decoration: none;
+    font-weight: 600;
+    color: white;
+    appearance: none;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    border-radius: 0.8rem;
+    position: relative;
+    line-height: 2rem;
+    width: 9rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: all 0.5s;
+}
+
+.filterBtn:hover{
+    background: rgb(2,0,26);
+    background: linear-gradient(100deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
+}

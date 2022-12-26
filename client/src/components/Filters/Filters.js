@@ -43,6 +43,13 @@ export default function Filters() {
     console.log('ordenado por alfabeto')
   }
 
+  function handleSortByAttack(e) {
+    e.preventDefault();
+    dispatch(actions.sortByAttack(e.target.value));
+    setOrden(`Ordenado ${e.target.value}`)
+    console.log('ordenado por attack')
+  }
+
   return (
     <div className={s.filterSection}>
       <div className={s.filters}>
@@ -109,7 +116,24 @@ export default function Filters() {
           </select>
         </div>
       </div>
-      <button onClick={(e) => {handleClick(e)}}>Reset filters</button>
+
+      <div className={s.filters}>
+        <div className={s.filterBy}>
+          <h3>Sort by Attack</h3>
+          <select
+            value="default"
+            onChange={(e) => handleSortByAlpha(e)}
+          >
+            <option value="default" disabled hidden>
+              Sort by Attack
+            </option>
+            <option value="asc">From - to +</option>
+            <option value="desc">From + to -</option>
+          </select>
+        </div>
+      </div>
+
+      <button className={s.filterBtn} onClick={(e) => {handleClick(e)}}>Reset filters</button>
     </div>
 
   );

@@ -11,8 +11,8 @@ export default function Navbar() {
     <div className={s.navbarSection}>
     <Link className={s.logo} to='/'><img className={s.logo} src={logo} alt="logo Pokemon" /></Link>
     <nav className={s.links}>
-        <NavLink className={s.link} to='/pokemons'>All Pokemons</NavLink>
-        <NavLink className={s.link} to='/create'>Create your Pokemon</NavLink>
+        <NavLink className={s.link} to='/pokemons'><i class="fa-solid fa-bowling-ball"></i> All Pokemons</NavLink>
+        <NavLink className={s.link} to='/create'><i class="fa-solid fa-plus"></i> Create your Pokemon</NavLink>
       </nav>
     <Search />
     </div>

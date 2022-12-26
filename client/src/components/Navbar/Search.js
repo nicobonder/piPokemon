@@ -31,7 +31,7 @@ export default function Search() {
 
   return (
     <div>
-      <input type='text' placeholder='Search' className={s.searchBar} value={search} onChange={searcher} />
+      <input type='text' placeholder= "Search" className={s.searchBar} value={search} onChange={searcher} />
     {
      
 

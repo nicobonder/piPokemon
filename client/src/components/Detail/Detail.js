@@ -3,6 +3,7 @@ import s from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as actions from "../../redux/actions";
+import { Link } from "react-router-dom";
 
 export default function Detail(props) {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function Detail(props) {
 
   return (
     <div className={s.detailSection}>
+      <Link className={s.backButton} to='/pokemons'><i class="fa-solid fa-caret-left"></i> Back</Link>
       <div className={s.pokeDetail}>
         <h2 className={s.detailTitle}>
           {pokemonDetail.name} - #{props.match.params.id}
