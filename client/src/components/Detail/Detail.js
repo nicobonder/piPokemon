@@ -20,7 +20,7 @@ export default function Detail(props) {
 
   return (
     <div className={s.detailSection}>
-      <Link className={s.backButton} to='/pokemons'><i class="fa-solid fa-caret-left"></i> Back</Link>
+      <Link className={s.backButton} to='/pokemons'><i className="fa-solid fa-caret-left"></i> Back</Link>
       <div className={s.pokeDetail}>
         <h2 className={s.detailTitle}>
           {pokemonDetail.name} - #{props.match.params.id}

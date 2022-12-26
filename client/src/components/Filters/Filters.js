@@ -6,11 +6,9 @@ import * as actions from "../../redux/actions";
 
 export default function Filters() {
   const [selectValue, setSelectValue] = React.useState("");
+  const [selectValueB, setSelectValueB] = React.useState("");
   const [/*orden*/, setOrden] = useState("");
-  // const handlechange = (event) => {
-  //   const value = event.target.value;
-  //   setSelectValue(value);
-  // };
+
 
   const dispatch = useDispatch();
   const pokemons = useSelector((state) => state.pokemons);
@@ -34,6 +32,13 @@ export default function Filters() {
     const value = e.target.value;
     setSelectValue(value);
     dispatch(actions.filterByType(value));
+  }
+
+  function handleFilterCreated(e) {
+    e.preventDefault();
+    const value = e.target.value;
+    setSelectValueB(value);
+    dispatch(actions.filterByCreated(value));
   }
 
   function handleSortByAlpha(e) {
@@ -87,19 +92,25 @@ export default function Filters() {
             <option value="water">water</option>
           </select>
           {selectValue && <h2 className={s.showFilter}>{selectValue}</h2>}
-        </div>
       </div>
       
       <div className={s.filterBy}>
         <h3 className={s.filterSubitle}>Created in</h3>
-        <select className={s.select} value="default">
+        <select 
+          className={s.select} 
+          value="default"  
+          onChange={e => handleFilterCreated(e)}
+          >
           <option value="default" disabled hidden>
             Created in
           </option>
-          <option value="API">API</option>
+          <option value="All" onClick={handleFilterCreated}>All</option>
+          <option value="API" onClick={handleFilterCreated}>API</option>
           <option value="Data Base">Data Base</option>
         </select>
+        {selectValueB && <h2 className={s.showFilter}>{selectValueB}</h2>}
       </div>
+    </div>
       
       <div className={s.filters}>
         <div className={s.filterBy}>
@@ -122,7 +133,7 @@ export default function Filters() {
           <h3>Sort by Attack</h3>
           <select
             value="default"
-            onChange={(e) => handleSortByAlpha(e)}
+            onChange={(e) => handleSortByAttack(e)}
           >
             <option value="default" disabled hidden>
               Sort by Attack

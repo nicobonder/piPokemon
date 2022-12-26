@@ -15,7 +15,7 @@ const initialState = {
     pokemons: [],
     pokemonDetail: {},
     types: [],
-    filterByType: null
+    filterByType: null,
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -31,9 +31,12 @@ const rootReducer = (state = initialState, action) => {
                 pokemonDetail: action.payload
             }
         case CREATE_POKEMON:
+            const name = action.payload.data.name 
+            const speed = action.payload.data.speed
             return{
                 ...state,
-                pokemons: state.pokemons.concat(action.payload)
+                //pokemons: state.pokemons.concat({action.payload.data.name, action.payload.data.speed })
+                pokemons: state.pokemons.concat({name, speed})
             }
         case DELETE_POKEMON:
             return{
@@ -100,9 +103,14 @@ const rootReducer = (state = initialState, action) => {
             filterByType: action.payload
         }
         case FILTER_BY_CREATED:
+            const allPokemons = state.pokemons
+            const createdFilter = action.payload === 'Data Base' ? 
+            allPokemons.filter(poke => poke.createdInDB) :
+            allPokemons.filter(poke => !poke.createdInDB)
         return{
             ...state,
-            pokemons: action.payload
+            pokemons: action.payload === 'All' ?
+                state.pokemons : createdFilter
         }
         case SEARCH_POKEMON:
             return {
@@ -114,3 +122,12 @@ const rootReducer = (state = initialState, action) => {
 };
 
 export default rootReducer;
+
+
+/*
+        case FILTER_BY_TYPE:
+            console.log('filterByType', action.payload)
+        return{
+            ...state,
+            filterByType: action.payload
+        }*/

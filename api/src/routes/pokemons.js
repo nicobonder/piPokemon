@@ -9,6 +9,7 @@ const {
     deletePokemons, 
     //getPokemonById,
     //getPokemonByName,
+    
 } = require('../controllers/pokemons.controller.js');
 
 //const router = require("express").Router();

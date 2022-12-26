@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const GET_POKEMONS = "GET_POKEMONS";
 export const GET_POKEMON_DETAIL = "GET_POKEMON_DETAIL";
 export const CREATE_POKEMON = "CREATE_POKEMON";
@@ -36,7 +38,18 @@ export const getPokemonDetail = (id) => {
 };
 
 export const createPokemon = (pokemon) => {
-    return { type: CREATE_POKEMON, payload: pokemon}
+    // const options = {
+    //     method: 'POST',
+    //     headers: {
+    //     'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(pokemon),
+    //     };
+    return async function(dispatch){
+        const newPokemon = await axios.post(`http://localhost:3001/pokemons/`, pokemon)
+       dispatch({type: CREATE_POKEMON, payload: newPokemon})
+    }
+    //return { type: CREATE_POKEMON, payload: pokemon}
 };
 
 export const deletePokemon = (id) => {
@@ -49,7 +62,7 @@ export const getTypes = () => {
         .then(res => res.json())
         .then(pokemons => {
             let types = [];
-            pokemons.map((pokemon) => types.push(pokemon.ship))
+            pokemons.map((pokemon) => types.push(pokemon.types))
             dispatch ({type: GET_TYPES, payload: types})
         }
         )
@@ -73,6 +86,10 @@ export const sortByAttack = (payload) => {
 // }
 export const filterByType = (filter) => {
     return {type: FILTER_BY_TYPE, payload: filter}
+}
+
+export const filterByCreated = (payload) => {
+    return {type: FILTER_BY_CREATED, payload}
 }
 
 // export const filterByCreated = (query) => (dispatch, getstate) => {

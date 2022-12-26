@@ -46,8 +46,6 @@ function validate(input){  //va a recibir el estado input con los cambios detect
       return errors;      //se retorna el obj errors con la prop y el string correspondiente. let errors = {name: 'se requiere un nombre'}
 }
 
-
-
 export default function Create() {
   const types = useSelector((state) => state.types);
   const dispatch = useDispatch();
@@ -65,9 +63,33 @@ export default function Create() {
     types: [],
   });
 
-  const handleSubmit = (e) => {
-//FALTAN LAS VALIDACIONES DEL FRONT
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+    setErrors(validate({
+      ...input,
+      [e.target.name]: e.target.value,
+    }))
+  };
 
+  function handleSelect(e) {
+    //recibe el tipo que se seleccionó en el selector
+    if (!input.types.includes(e.target.value)) {
+      //evita que se repitan los tipos
+      setInput({
+        ...input,
+        types: [...input.types, e.target.value], //al array de la prop types le añade el nuevo tipo que se seleccionó
+      });
+    }
+    setErrors(validate({
+      ...input,
+            types: [...input.types, e.target.value]
+    }))
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(actions.createPokemon(input));
     console.log("form submited");
@@ -84,32 +106,6 @@ export default function Create() {
       types: [],
     });
     history.push("/pokemons"); //despues redirige para ver todos los poke
-  };
-
-  function handleSelect(e) {
-    //recibe el tipo que se seleccionó en el selector
-    if (!input.types.includes(e.target.value)) {
-      //evita que se repitan los tipos
-      setInput({
-        ...input,
-        types: [...input.types, e.target.value], //al array de la prop type le añade el nuevo tipo que se seleccionó
-      });
-    }
-    setErrors(validate({
-      ...input,
-            types: [...input.types, e.target.value]
-    }))
-  }
-
-  const handleChange = (e) => {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-    setErrors(validate({
-      ...input,
-      [e.target.name]: e.target.value,
-    }))
   };
 
   function handleDelete(el) {

@@ -38,7 +38,33 @@ const getApiInfo = async () => {
 //VER SI HACE FALTA USAR attributes
 const getDBInfo = async () => {
     const infoDB = await Pokemon.findAll({include: 'types'});
-    return infoDB.map((el) => el.dataValues);
+    console.log('infodb')
+    const newInfo = infoDB.map((poke) => {
+        const obj = 
+        {
+            id: poke.dataValues.id, 
+            name: poke.dataValues.name,
+            hp: poke.dataValues.hp,
+            attack: poke.dataValues.attack,
+            defense: poke.dataValues.defense,
+            speed: poke.dataValues.speed,
+            height: poke.dataValues.height,
+            weight: poke.dataValues.weight,
+            img: poke.dataValues.img,
+            types: poke.dataValues.types.map((t) => t.dataValues.name)
+        }
+
+        const lostypes = poke.dataValues.types.map((t) => t.dataValues.name)
+        console.log('map de types', lostypes)
+        console.log('el type de db', poke.dataValues.types)
+    return obj
+    });
+
+    console.log('new info', newInfo)
+
+    return newInfo
+
+    //{id: el.dataValues.id, name: el.dataValues.name})
 }
 
 const getAllPokemons = async () => {
@@ -48,15 +74,15 @@ const getAllPokemons = async () => {
 
     //Concateno para unir db con la info que viene de la api
     allPokemons = [...apiPokemons, ...dbPokemons];
-    console.log('All pokemons:', allPokemons)
+    //console.log('All pokemons:', allPokemons)
     return allPokemons
 }
 
 const createPokemon = async (req, res) =>{
-  const { id, name, img, attack, defense, speed, hp, height, weight, types, createdInDB } = req.body;
+  const { name, img, attack, defense, speed, hp, height, weight, types, createdInDB } = req.body;
   try{
     let newPokemon = await Pokemon.create({ 
-        id,
+        //id
         name, 
         img,
         attack, 
