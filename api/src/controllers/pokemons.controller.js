@@ -51,6 +51,7 @@ const getDBInfo = async () => {
             height: poke.dataValues.height,
             weight: poke.dataValues.weight,
             img: poke.dataValues.img,
+            createdInDB: poke.createdInDB,
             types: poke.dataValues.types.map((t) => t.dataValues.name)
         }
 
