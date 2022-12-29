@@ -61,6 +61,7 @@ export default function Create() {
     weight: 0,
     img: "",
     types: [],
+    createdInDB: true
   });
 
   const handleChange = (e) => {
@@ -104,6 +105,7 @@ export default function Create() {
       weight: 0,
       img: "",
       types: [],
+      createdInDB: true
     });
     history.push("/pokemons"); //despues redirige para ver todos los poke
   };
@@ -220,6 +222,18 @@ export default function Create() {
               />
                 {errors.img && <p className={s.error}>{errors.img}</p>}
             </div>
+
+            {/* <div className={s.input}>
+              <label htmlFor="created">Created: </label>
+              <input
+                type="checkbox"
+                id="created"
+                name="created"
+                checked={checked}
+                value={input.createdInDB}
+                onChange={(e) => handleCheck(e)}
+              />
+            </div> */}
 
 
             <div className={s.typeForm}>

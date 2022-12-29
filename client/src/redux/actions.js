@@ -17,7 +17,6 @@ export const SEARCH_POKEMON = "SEARCH_POKEMON";
 
 export const getPokemons = () => {
     return function(dispatch) {
-        
         return fetch('http://localhost:3001/pokemons')
         .then(res => res.json())
         .then(pokemons => dispatch(
@@ -69,34 +68,21 @@ export const getTypes = () => {
     }
 };
 
-export const sortByAlphabet = (payload) => {
-    return ({type: SORT_BY_ALPHABET, payload});
+export const sortByAlphabet = (order) => {
+    return ({type: SORT_BY_ALPHABET, payload: order});
 }
 
-export const sortByAttack = (payload) => {
-    return {type: SORT_BY_ATTACK, payload}
+export const sortByAttack = (order) => {
+    return {type: SORT_BY_ATTACK, payload: order}
 }
 
-// export const filterByType = (query) => ( getstate) => {
-//     const { pokemons } = getstate()
-    
-//     let resultType = pokemons.filter((p) => p.type.toLowerCase().includes(query.toLowerCase()))
-
-//     return ({type: FILTER_BY_TYPE, payload: resultType})
-// }
 export const filterByType = (filter) => {
     return {type: FILTER_BY_TYPE, payload: filter}
 }
 
-export const filterByCreated = (payload) => {
-    return {type: FILTER_BY_CREATED, payload}
+export const filterByCreated = (value) => {
+    return {type: FILTER_BY_CREATED, payload: value}
 }
-
-// export const filterByCreated = (query) => (dispatch, getstate) => {
-//         const { pokemons } = getstate()
-//         const results = pokemons.searchPokemon.filter((poke) => poke.type === query);
-//      dispatch ({type: FILTER_BY_CREATED, payload: results}
-// }
 
 export const searchPokemon = (query) => (dispatch, getstate) => {
     const { pokemons } = getstate()

@@ -3,15 +3,24 @@ import s from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as actions from "../../redux/actions";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Detail(props) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const pokemonDetail = useSelector((state) => state.pokemonDetail);
-  console.log('detail', pokemonDetail)
-  console.log('detail attack', pokemonDetail.attack)
-  console.log('detail type', pokemonDetail.type)
-  //console.log('detail type 0', pokemonDetail.type[0])
+  //console.log('detail', pokemonDetail)
+  //console.log('detail name', pokemonDetail.name)
+  //console.log('typeof pokemonDetail.types', typeof pokemonDetail.types)  
+
+  function handleDeletePokemon(e){
+    dispatch(actions.deletePokemon(props.match.params.id))
+    history.push("/pokemons");
+  }
+
+  // function handleUpdate(e){
+  //   dispatch(actions.upd)
+  // }
 
   useEffect(() => {
     dispatch(actions.getPokemonDetail(props.match.params.id));
@@ -23,13 +32,13 @@ export default function Detail(props) {
       <Link className={s.backButton} to='/pokemons'><i className="fa-solid fa-caret-left"></i> Back</Link>
       <div className={s.pokeDetail}>
         <h2 className={s.detailTitle}>
-          {pokemonDetail.name} - #{props.match.params.id}
+          {pokemonDetail.name} - #{props.match.params.id.slice(0, 4)}
         </h2>
         <div>
           <img
             className={s.detailImg}
             src={pokemonDetail.img}
-            alt={`pokemon ${props.match.params.id}`}
+            alt={`pokemon ${props.match.params.id.slice(0, 4)}`}
           />
         </div>
         <div>
@@ -57,16 +66,24 @@ export default function Detail(props) {
             <h3 className={s.detailSubTitle}>Weight</h3>
             <p className={s.infoDetail}>{pokemonDetail.weight}</p>
           </div>
+         
           <div className={s.infoDiv}>
             <h3 className={s.detailSubTitle}>Type</h3>
-              <p className={s.infoDetail}>{pokemonDetail.type}</p>
+              {pokemonDetail.types?.map((t) => (
+                <p className={s.infoDetail}>{t + ","}</p>
+              ))}
           </div>
             
-          
         </div>
         <div className={s.btnDiv}>
-          <button className={s.btnDetail}>Update</button>
-          <button className={s.btnDetail}>Delete</button>
+          {!pokemonDetail.createdInDB ?
+          <button className={s.btnNot} type='submit' disabled >Update</button> :
+          <button className={s.btnDetail} type='submit'>Update</button>
+        }
+           {!pokemonDetail.createdInDB ?
+          <button className={s.btnNot} disabled >Delete</button> :
+          <button className={s.btnDetail} onClick={() => handleDeletePokemon()}>Delete</button>
+        }
         </div>
       </div>
     </div>

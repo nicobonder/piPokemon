@@ -16,8 +16,7 @@
 
 .filters{
     width: 15rem;
-    margin: 0.5rem;
-    padding: 0.5rem;
+    margin: 0.3rem;
     background: transparent;
     border: none;
     display: flex;
@@ -32,11 +31,11 @@
 }
 
 .filterTitle{
-    margin: 1rem 0 0.5rem 0;
+    margin: 0.8rem 0 0.5rem 0;
 }
 
 .filterSubitle{
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
 
 select {
@@ -73,6 +72,11 @@ option {
 }
 
 .filterBtn:hover{
+    font-size: 1.1rem;
     background: rgb(2,0,26);
     background: linear-gradient(100deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
+}
+
+.showFilter{
+    margin: 0.5rem 0;
 }

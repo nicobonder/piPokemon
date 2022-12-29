@@ -13,11 +13,23 @@
     align-items: center;
     justify-items: center;
     z-index: 10;
+    transition: all 0.3s;
 }
 
-.PokeImage{
+.pokeCard:hover{
+    background: rgba(87, 87, 87, 0.6);
+}
+
+.pokeImage{
     height: 5rem;
     margin: 0.2rem 0 0 0;
+    transition: all 0.5s;
+}
+
+.pokeImage:hover{
+    height: 5.4rem;
+    transform: rotate(-10deg);
+
 }
 
 .cardTitle{
@@ -32,6 +44,6 @@
     cursor: pointer;
 }
 
-.types p {
+.pokeInfo {
     font-weight: 600;
 }
