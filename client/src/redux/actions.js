@@ -11,6 +11,7 @@ export const FILTER_BY_TYPE = "FILTER_BY_TYPE";
 export const FILTER_BY_CREATED = "FILTER_BY_CREATED";
 export const SORT_BY_ALPHABET = "SORT_BY_ALPHABET";
 export const SORT_BY_ATTACK = "SORT_BY_ATTACK";
+export const CLEAN_FILTER = "CLEAR_FILTER"
 
 export const SEARCH_POKEMON = "SEARCH_POKEMON";
 
@@ -30,11 +31,25 @@ export const getPokemonDetail = (id) => {
         return fetch(`http://localhost:3001/pokemons/${id}`)
         .then(res => res.json())
         .then(data => dispatch(
-            {type: GET_POKEMON_DETAIL, payload: data[0]},
-            console.log('data[0] in actions', data[0])
+            {type: GET_POKEMON_DETAIL, payload: data[0]}
         ))
     }
 };
+
+export const searchPokemon = (name) => { 
+    return async function(dispatch) {
+        try {
+            let info =  await axios.get("/pokemons?name=" + name);
+            return dispatch({
+                type: "GET_POKEMON_DETAIL",
+                payload: info.data
+            })
+        } catch(error){
+            return 'We couldnt find that Pokemon'
+        }
+      
+    } 
+} 
 
 export const createPokemon = (pokemon) => {
     // const options = {
@@ -84,8 +99,13 @@ export const filterByCreated = (value) => {
     return {type: FILTER_BY_CREATED, payload: value}
 }
 
-export const searchPokemon = (query) => (dispatch, getstate) => {
+export const cleanFilter = (payload) => {
+    return {type: CLEAN_FILTER, payload}
+}
+
+/*export const searchPokemon = (query) => (dispatch, getstate) => {
     const { pokemons } = getstate()
     const result = pokemons.searchPokemon.find((poke) => poke.name.toLowerCase().includes(query.toLowerCase()));
     dispatch({ type: SEARCH_POKEMON, payload: result})
 } 
+*/

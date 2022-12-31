@@ -11,11 +11,9 @@ export default function Filters() {
   const [orden, setOrden] = useState("");
   const [ordenB, setOrdenB] = useState("");
   
-  
   const history = useHistory(); 
   const dispatch = useDispatch();
   const pokemons = useSelector((state) => state.pokemons);
-  //const types = useSelector((state) => state.types);
 
   React.useEffect(() => {
     if (!pokemons[0]) {
@@ -28,15 +26,16 @@ export default function Filters() {
     //e.preventDefault();
     const value = e.target.value;
     console.log('resetear filtros')
-    dispatch(actions.getPokemons(value))
+    dispatch(actions.cleanFilter(value))
     //history.push('/pokemons')
   };
 
   function handleFilterType(e) {
-    e.preventDefault();
+    //e.preventDefault();
     const value = e.target.value;
     setSelectValue(value); //para mostrarle a usuario lo que eligio
     dispatch(actions.filterByType(value)); //disapara la action del reducer
+    history.push("/pokemons");
   }
 
   function handleFilterCreated(e) {
@@ -71,11 +70,12 @@ export default function Filters() {
           <select
             className={s.select}
             value="default"
-            onChange={(e) => handleFilterType(e)}
+              onChange={(e) => handleFilterType(e)}
           >
             <option value="default" disabled hidden>
               Pokemon type
             </option>
+            <option value="all">all</option>
             <option value="bug">bug</option>
             <option value="dark">dark</option>
             <option value="dragon">dragon</option>
@@ -110,8 +110,8 @@ export default function Filters() {
           <option value="default" disabled hidden>
             Created in
           </option>
-          <option value="All" onClick={handleFilterCreated}>All</option>
-          <option value="API" onClick={handleFilterCreated}>API</option>
+          <option value="All">All</option>
+          <option value="API">API</option>
           <option value="Data Base">Data Base</option>
         </select>
         {selectValueB && <h3 className={s.showFilter}>{selectValueB}</h3>}
@@ -152,14 +152,8 @@ export default function Filters() {
         </div>
       </div>
 
-      <button className={s.filterBtn} onClick={(e) => {handleClick(e)}}>Reset filters</button>
+      <button className={s.filterBtn} onClick={() => handleClick()}>Reset filters</button>
     </div>
 
   );
 }
-
-/*Make sure that the handleFilterCreated function is being called when you expect it to be. You can add a console.log statement at the beginning of the function to check if it is being executed.
-
-Check the value of the value variable within the handleFilterCreated function. Make sure that it is being set correctly and that it represents the value you want to use to filter the list of pokemons.
-
-Make sure that the actions.filterByCreated function is being called with the correct arguments and that it is correctly filtering the list of pokemons. You can add a console.log statement before and after the call to actions.filterByCreated to see what the list of pokemons looks like before and after the function is called.*/
