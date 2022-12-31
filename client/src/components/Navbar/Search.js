@@ -22,10 +22,16 @@ function handleInputChange(e) {
   //funcion para filtrar
   function handleSearch(e) {
     e.preventDefault();
-    if(!input){
-      return ('We couldnt find that Pokemon');
-    }  
-    dispatch(actions.searchPokemon(input)) 
+    let match = pokemons.find((p) => p.name === input)
+    console.log('match Search', match)
+    if(match){
+      dispatch(actions.searchPokemon(match));
+     // history.push(`/pokemons?name=${input}`); //redirijo a la pagina de ese poke
+      setInput(''); //vacio el input
+    } else {
+      alert('that Pokemon doesnt exist. Try again.')
+      setInput('')
+    }
   }
 
   //metodo de filtrado 
@@ -52,7 +58,7 @@ function handleInputChange(e) {
         placeholder= "Search by name"
         onClick={() => setInput('')} 
         />
-      <button type = 'submit' onClick={(e) => handleSearch(e)}>Search</button>
+     
       </form>
     </div>
   )
@@ -63,7 +69,7 @@ function handleInputChange(e) {
     let match = pokemons.find((p) => p.name === input)
     if(match){
       dispatch(actions.searchPokemon(input));
-      history.push(`/pokemons/${input}`); //redirijo a la pagina de ese poke
+      history.push(`/pokemons?name=${input}`); //redirijo a la pagina de ese poke
       setInput(''); //vacio el input
     } else {
       alert('that Pokemon doesnt exist. Try again.')

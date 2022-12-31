@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
             )   //el objeto tiene mucha info, necesto solo dataValues
         cacheTypes = (await Type.findAll()).map(el => el.dataValues);
         }
+        console.log('cachetypes', cacheTypes)
         res.status(200).send(cacheTypes)
     } catch(error){
         return res.status(500).json({ message: error.message })

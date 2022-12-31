@@ -24,7 +24,7 @@ export default function Pokemons() {
     <div className={s.pokemonsSection}>
       <Filters />
       <div className={s.allPokemons}>
-        {//si hay un filterbytype mostra lo q incluya ese filtro. Si no existe mapea todo pokemons
+        {
           pokemons.map(poke =>{
             return <PokeCard 
             key={poke.id} 
@@ -41,7 +41,7 @@ export default function Pokemons() {
 }
 
 /*      <div className={s.allPokemons}>
-        {
+        {//si hay un filterbytype mostra lo q incluya ese filtro. Si no existe mapea todo pokemons
           pokemons.filter((el) => filterByType ? el.types.includes(filterByType) : true ).map(poke =>{
             return <PokeCard 
             key={poke.id} 

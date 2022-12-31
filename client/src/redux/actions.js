@@ -28,7 +28,7 @@ export const getPokemons = () => {
 
 export const getPokemonDetail = (id) => {
     return function(dispatch) {
-        return fetch(`http://localhost:3001/pokemons/${id}`)
+        return fetch(`http://localhost:3001/pokemons/${id}`)    
         .then(res => res.json())
         .then(data => dispatch(
             {type: GET_POKEMON_DETAIL, payload: data[0]}
@@ -36,29 +36,13 @@ export const getPokemonDetail = (id) => {
     }
 };
 
-export const searchPokemon = (name) => { 
-    return async function(dispatch) {
-        try {
-            let info =  await axios.get("/pokemons?name=" + name);
-            return dispatch({
-                type: "GET_POKEMON_DETAIL",
-                payload: info.data
-            })
-        } catch(error){
-            return 'We couldnt find that Pokemon'
-        }
-      
-    } 
-} 
+    export const searchPokemon = (name) => ({
+        type: SEARCH_POKEMON, 
+        payload: name
+    }) 
+
 
 export const createPokemon = (pokemon) => {
-    // const options = {
-    //     method: 'POST',
-    //     headers: {
-    //     'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(pokemon),
-    //     };
     return async function(dispatch){
         const newPokemon = await axios.post(`http://localhost:3001/pokemons/`, pokemon)
        dispatch({type: CREATE_POKEMON, payload: newPokemon})
@@ -103,9 +87,21 @@ export const cleanFilter = (payload) => {
     return {type: CLEAN_FILTER, payload}
 }
 
-/*export const searchPokemon = (query) => (dispatch, getstate) => {
-    const { pokemons } = getstate()
-    const result = pokemons.searchPokemon.find((poke) => poke.name.toLowerCase().includes(query.toLowerCase()));
-    dispatch({ type: SEARCH_POKEMON, payload: result})
-} 
+/* stackoverflow
+export const searchPokemon = (name) => ({
+    type: SEARCH_POKEMON, 
+    payload: name.toLowerCase()
+}) 
+*/
+
+/*    return async function(dispatch) {
+        try {
+            let info =  await axios.get("/pokemons?name=" + name);
+            return dispatch({
+                type: "GET_POKEMON_DETAIL",
+                payload: info.data
+            })
+        } catch(error){
+            return 'We couldnt find that Pokemon'
+        }     
 */
