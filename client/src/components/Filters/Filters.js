@@ -47,18 +47,23 @@ export default function Filters() {
   }
 
   function handleSortByAlpha(e) {
-    //e.preventDefault();
-    dispatch(actions.sortByAlphabet(e.target.value));
-    setOrden(`Ordered from ${e.target.value}`)
+    e.preventDefault();
+    const value = e.target.value;
+    dispatch(actions.sortByAlphabet(value));
+    setOrden(`Ordered from ${value}`)
     console.log('ordenado por alfabeto')
+    history.push("/pokemons");
   }
 
   function handleSortByAttack(e) {
     e.preventDefault();
-    dispatch(actions.sortByAttack(e.target.value));
-    setOrdenB(`Ordered from ${e.target.value}`)
+    const value = e.target.value;
+    dispatch(actions.sortByAttack(value));
+    setOrdenB(`Ordered from ${value}`)
     console.log('ordenado por attack')
+    history.push("/pokemons");
   }
+
 
   return (
     <div className={s.filterSection}>
@@ -145,14 +150,14 @@ export default function Filters() {
             <option value="default" disabled hidden>
               Sort by Attack
             </option>
-            <option value="- to +">From - to +</option>
-            <option value="+ to -">From + to -</option>
+            <option value="- to +" onClick={(e) => handleSortByAlpha(e)} >From - to +</option>
+            <option value="+ to -" onClick={(e) => handleSortByAlpha(e)}>From + to -</option>
           </select>
           {ordenB && <h3 className={s.showFilter}>{ordenB}</h3>}
         </div>
       </div>
 
-      <button className={s.filterBtn} onClick={() => handleClick()}>Reset filters</button>
+      <button className={s.filterBtn} onClick={(e) => handleClick(e)}>Reset filters</button>
     </div>
 
   );

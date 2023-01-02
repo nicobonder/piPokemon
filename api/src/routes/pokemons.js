@@ -45,16 +45,6 @@ router.get('/:id', async (req, res) =>{
         }
 });
 
-// router.get('/:name', async (req, res) =>{
-//     const { name } = req.params;
-//     const pokeByName = await getAllPokemons(); //traigo todos los poke
-
-//     if(name){ //si me pasaron un name valido, filtro y devuelvo
-//         let pokeName = pokeByName.filter(poke => poke.name == name)
-//         pokeName.length ? res.status(200).json(pokeName) : res.status(404).send('I am sorry, we couldnt find that pokemon.');  //si el name no es valido devuelvo mensaje.
-//     }
-// });
-
 //Ruta de creacion
 router.post('/', (createPokemon));
 //Ruta ruta para actualizar un proyecto

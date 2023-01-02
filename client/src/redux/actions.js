@@ -15,7 +15,6 @@ export const CLEAN_FILTER = "CLEAR_FILTER"
 
 export const SEARCH_POKEMON = "SEARCH_POKEMON";
 
-
 export const getPokemons = () => {
     return function(dispatch) {
         return fetch('http://localhost:3001/pokemons')
@@ -51,7 +50,6 @@ export const searchPokemon = (name) => {
         } 
     }
 } 
-
 
 export const createPokemon = (pokemon) => {
     return async function(dispatch){

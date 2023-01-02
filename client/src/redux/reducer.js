@@ -17,7 +17,7 @@ const initialState = {
   allPokemons: [],
   pokemonDetail: {},
   types: [],
-  filterByType: []
+  filterByType: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -33,13 +33,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         pokemonDetail: action.payload,
       };
-    
-    case SEARCH_POKEMON:
-      return{
-        ...state,
-        pokemons: action.payload
-    }
-
     case GET_TYPES:
       return {
         ...state,
@@ -80,74 +73,113 @@ const rootReducer = (state = initialState, action) => {
         ),
       };
 
-      //SORTS Y FILTERS
+    //SORTS Y FILTERS
     case SORT_BY_ALPHABET:
       const sortAlpha =
         action.payload === "a-z"
           ? state.pokemons.sort((a, b) => {
-              return a.name.toLowerCase() > b.name.toLowerCase();
-            })
-          : state.pokemons.sort((a, b) => {
-              return a.name.toLowerCase() < b.name.toLowerCase();
-            });
+            if (a.name.toLowerCase() > b.name.toLowerCase()) {
+              return 1;
+            }
+            if (a.name.toLowerCase() < b.name.toLowerCase()) {
+              return -1;
+            }
+            return 0;
+          })
+        : state.pokemons.sort((a, b) => {
+            if (a.name.toLowerCase() > b.name.toLowerCase()) {
+              return -1;
+            }
+            if (a.name.toLowerCase() < b.name.toLowerCase()) {
+              return 1;
+            }
+            return 0;
+          });
+            console.log("state.pokemons alpha", state.pokemons);
+            console.log("sortedPoke alpha", sortAlpha);
       return {
         ...state,
         pokemons: sortAlpha,
       };
 
     case SORT_BY_ATTACK:
-      let sortedPoke = action.payload === "- to +" ? state.pokemons.sort((a, b) => {
-          if(a.attack > b.attack){return 1;} if(a.attack < b.attack){return -1;} return 0;}) : state.pokemons.sort((a, b) => {if(a.attack > b.attack){return -1;} if(a.attack < b.attack){return 1;} return 0;});
-          console.log('antes', state.pokemons)
+      let sortedPoke =
+        action.payload === "- to +"
+          ? state.pokemons.sort((a, b) => {
+              if (a.attack > b.attack) {
+                return 1;
+              }
+              if (a.attack < b.attack) {
+                return -1;
+              }
+              return 0;
+            })
+          : state.pokemons.sort((a, b) => {
+              if (a.attack > b.attack) {
+                return -1;
+              }
+              if (a.attack < b.attack) {
+                return 1;
+              }
+              return 0;
+            });
+      console.log("state.pokemons attack", state.pokemons);
+      console.log("sortedPoke attack", sortedPoke);
       return {
-          ...state,
-          pokemons: sortedPoke,
-        }
-      
+        ...state,
+        pokemons: sortedPoke,
+      };
+
+    case SEARCH_POKEMON:
+      return {
+        ...state,
+        pokemons: action.payload,
+      };
 
     case FILTER_BY_TYPE:
       let type = action.payload;
-      console.log(action.payload)
+      console.log(action.payload);
       let allPoke = state.allPokemons;
-      let pokemonFiltered = state.pokemons.filter((poke) => poke.types.includes(type))  
-      let test = action.payload === 'all' ? allPoke : pokemonFiltered
+      let pokemonFiltered = state.pokemons.filter((poke) =>
+        poke.types.includes(type)
+      );
+      let test = action.payload === "all" ? allPoke : pokemonFiltered;
 
       console.log("filterByType", action.payload);
-      if(pokemonFiltered.length > 0){
+      if (pokemonFiltered.length > 0) {
         return {
           ...state,
-          pokemons: test}
+          pokemons: test,
+        };
       } else {
-        return{
-          ...state, 
-          pokemons: state.allPokemons
-        }
+        return {
+          ...state,
+          pokemons: state.allPokemons,
+        };
       }
 
     case FILTER_BY_CREATED:
-     let created = state.allPokemons.filter((poke) => poke.createdInDB)
-     let apiPoke = state.allPokemons.filter((poke) => !poke.createdInDB)
-     let createdFilter = action.payload === 'Data Base' ? created : apiPoke 
-     return {
-      ...state,
-      pokemons: action.payload === 'All' ? state.allPokemons : createdFilter
-    }
+      let created = state.allPokemons.filter((poke) => poke.createdInDB);
+      let apiPoke = state.allPokemons.filter((poke) => !poke.createdInDB);
+      let createdFilter = action.payload === "Data Base" ? created : apiPoke;
+      return {
+        ...state,
+        pokemons: action.payload === "All" ? state.allPokemons : createdFilter,
+      };
 
-    case CLEAN_FILTER: 
-    return{
-      ...state,
-      pokemons: state.pokemons,
-      types: state.types,
-      filterByType: state.filterByType 
-    }
+    case CLEAN_FILTER:
+      return {
+        ...state,
+        pokemons: state.pokemons,
+        types: state.types,
+        filterByType: state.filterByType,
+      };
     default:
       return { ...state };
   }
 };
 
 export default rootReducer;
-
-
 
 //search
 /*  let named = action.payload;
@@ -166,11 +198,6 @@ export default rootReducer;
           pokemons: fullPoke
         }
       }*/
-
-
-
-
-
 
 // case SORT_BY_ATTACK:
 //     const sortAttack = action.payload
@@ -201,8 +228,6 @@ export default rootReducer;
 //                 }
 //             break;
 
-
-
 //antes de stackoverflow
 //SORTS Y FILTERS
 // case SORT_BY_ALPHABET:
@@ -227,13 +252,12 @@ export default rootReducer;
 //       ...state,
 //       pokemons: sortedPoke,
 //     }
-  
 
 // case FILTER_BY_TYPE:
 //   let type = action.payload;
 //   console.log(action.payload)
 //   let allPoke = state.allPokemons;
-//   let pokemonFiltered = state.pokemons.filter((poke) => poke.types.includes(type))  
+//   let pokemonFiltered = state.pokemons.filter((poke) => poke.types.includes(type))
 //   let test = action.payload === 'all' ? allPoke : pokemonFiltered
 
 //   console.log("filterByType", action.payload);
@@ -243,7 +267,7 @@ export default rootReducer;
 //       pokemons: test}
 //   } else {
 //     return{
-//       ...state, 
+//       ...state,
 //       pokemons: state.allPokemons
 //     }
 //   }
@@ -251,13 +275,13 @@ export default rootReducer;
 // case FILTER_BY_CREATED:
 //  let created = state.pokemons.filter((poke) => poke.createdInDB)
 //  let apiPoke = state.allPokemons.filter((poke) => !poke.createdInDB)
-//  let createdFilter = action.payload === 'Data Base' ? created : apiPoke 
+//  let createdFilter = action.payload === 'Data Base' ? created : apiPoke
 //  return {
 //   ...state,
 //   pokemons: action.payload === 'All' ? state.allPokemons : createdFilter
 // }
 
-// case CLEAN_FILTER: 
+// case CLEAN_FILTER:
 // return{
 //   ...state,
 //   pokemons: state.pokemons,

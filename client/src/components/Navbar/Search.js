@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
 import s from './SearchBar.module.css'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as actions from "../../redux/actions";
-import { useHistory } from 'react-router-dom';
 
 export default function Search() {
   const [name, setName] = useState("")
   const dispatch = useDispatch();
-  let history = useHistory();
-  const pokemons = useSelector((state)=> state.pokemons);
-
+  
   // React.useEffect(() => {
   //   if (!pokemons[0]) {
   //     dispatch(actions.getPokemons());
