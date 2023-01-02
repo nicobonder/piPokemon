@@ -1,3 +1,8 @@
+.searchContainer{
+    width: 12rem;
+    display: flex;
+}
+
 .searchBar{
     height: 1.8rem;
     width: 10rem;
@@ -5,8 +10,56 @@
     border-radius: 0.3rem;
     padding-left: 0.2rem;
     font-size: 600;
+    color: black;
 }
 
 .searchBar::placeholder{
     padding-left: 0.2rem;
+}
+
+.btnSearch{
+    background: rgb(2,0,36);
+    background: linear-gradient(138deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
+    text-decoration: none;
+    font-weight: 600;
+    color: white;
+    appearance: none;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    position: relative;
+    width: 3rem;
+    height: 2rem;
+    cursor: pointer;
+    margin-left: 0.15rem;
+    transition: all 0.5s;
+}
+
+.btnSearch:hover{
+    background: rgb(2,0,26);
+    background: linear-gradient(100deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
+}
+
+
+
+.dropDown{
+    background-color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.dropDown :empty{
+    border: none;
+}
+
+.divDrop{
+    cursor: pointer;
+    text-align: start;
+    margin: 0.15rem 0;
+}
+
+
+.searchInner {
+    display: flex;
 }

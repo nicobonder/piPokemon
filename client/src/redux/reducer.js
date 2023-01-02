@@ -35,12 +35,10 @@ const rootReducer = (state = initialState, action) => {
       };
     
     case SEARCH_POKEMON:
-      let found = state.pokemons.find((poke) => poke.name === action.payload)
-      console.log('found reducer', found)
-      return {
+      return{
         ...state,
-        pokemons: found,
-      };
+        pokemons: action.payload
+    }
 
     case GET_TYPES:
       return {
@@ -148,6 +146,31 @@ const rootReducer = (state = initialState, action) => {
 };
 
 export default rootReducer;
+
+
+
+//search
+/*  let named = action.payload;
+      let fullPoke = state.allPokemons;
+      console.log('named in reducer', named)
+      let found = state.pokemons.find((poke) => poke.name.toLowerCase() === named)
+      console.log('found reducer', found)
+      if(found){
+        return {
+          ...state,
+          pokemons: found,
+        } 
+      }else {
+        return {
+          ...state,
+          pokemons: fullPoke
+        }
+      }*/
+
+
+
+
+
 
 // case SORT_BY_ATTACK:
 //     const sortAttack = action.payload

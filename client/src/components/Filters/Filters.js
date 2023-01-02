@@ -31,7 +31,7 @@ export default function Filters() {
   };
 
   function handleFilterType(e) {
-    //e.preventDefault();
+    e.preventDefault();
     const value = e.target.value;
     setSelectValue(value); //para mostrarle a usuario lo que eligio
     dispatch(actions.filterByType(value)); //disapara la action del reducer

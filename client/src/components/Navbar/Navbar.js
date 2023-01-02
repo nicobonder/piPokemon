@@ -4,7 +4,6 @@ import s from './Navbar.module.css'
 import logo from './pokeLogo.png'
 import Search from './Search';
 
-
 export default function Navbar() {
 
   return (
