@@ -39,8 +39,6 @@ export const searchPokemon = (name) => {
     return async function(dispatch) {
         try {
             let info =  await axios.get("http://localhost:3001/pokemons?name=" + name);
-            console.log('info en action', info)
-            console.log('info en action.data', info.data)
             return dispatch({
                 type: "SEARCH_POKEMON",
                 payload: info.data
@@ -64,7 +62,7 @@ export const deletePokemon = (id) => {
 };
 
 export const getTypes = () => {
-    return function(dispatch){
+    return async function(dispatch){
         return fetch('http://localhost:3001/types')
         .then(res => res.json())
         .then(pokemons => {

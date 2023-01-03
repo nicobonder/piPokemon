@@ -1,82 +1,259 @@
-.filterSection{
-    width: 15rem;
-    height: 86vh;
-    margin: 0.5rem 1rem;
-    padding: 0.5rem;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 0.3rem;
-    backdrop-filter: blur(1px);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
+/*de 640 a 1200*/
+@media (max-width: 640px) {
+    .filterSection{
+        width: 12rem;
+        height: 86vh;
+        margin: 0.5rem 1rem;
+        padding: 0.5rem;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 0.3rem;
+        backdrop-filter: blur(1px);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+    }
+
+    .filters{
+        width: 10rem;
+        margin: 0.3rem;
+        background: transparent;
+        border: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+    }
+
+    .filterBy, .filterSubitle, .filterTitle select{
+        background-color: transparent;
+        border: none;
+    }
+
+    .filterTitle{
+        margin: 0.8rem 0 0.5rem 0;
+    }
+
+    .filterSubitle{
+        margin-bottom: 0.4rem;
+    }
+
+    select {
+        border-radius: 0.2rem;
+        height: 1.5rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    option {
+        border-radius: 0.2rem;
+        height: 1.5rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .filterBtn{
+        background: rgb(2,0,36);
+        background: linear-gradient(138deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
+        text-decoration: none;
+        font-weight: 600;
+        color: white;
+        appearance: none;
+        outline: none;
+        border: none;
+        font-size: 0.8rem;
+        border-radius: 0.8rem;
+        position: relative;
+        line-height: 2rem;
+        width: 7rem;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        transition: all 0.5s;
+    }
+
+    .filterBtn:hover{
+        font-size: 0.9rem;
+        background: rgb(2,0,26);
+        background: linear-gradient(100deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
+    }
+
+    .showFilter{
+        margin: 0.5rem 0;
+    }
 }
 
-.filters{
-    width: 15rem;
-    margin: 0.3rem;
-    background: transparent;
-    border: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
+
+/*de 640 a 1200*/
+@media (min-width: 640px) {
+    .filterSection{
+        width: 12rem;
+        height: 86vh;
+        margin: 0.5rem 0.6rem;
+        padding: 0.5rem;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 0.3rem;
+        backdrop-filter: blur(1px);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+    }
+
+    .filters{
+        width: 10rem;
+        margin: 0.25rem;
+        background: transparent;
+        border: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+    }
+
+    .filterBy, .filterSubitle, .filterTitle select{
+        background-color: transparent;
+        border: none;
+    }
+
+    .filterTitle{
+        margin: 0.8rem 0 0.5rem 0;
+    }
+
+    .filterSubitle{
+        margin-bottom: 0.4rem;
+    }
+
+    select {
+        border-radius: 0.2rem;
+        height: 1.5rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    option {
+        border-radius: 0.2rem;
+        height: 1.5rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .filterBtn{
+        background: rgb(2,0,36);
+        background: linear-gradient(138deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
+        text-decoration: none;
+        font-weight: 600;
+        color: white;
+        appearance: none;
+        outline: none;
+        border: none;
+        font-size: 0.8rem;
+        border-radius: 0.8rem;
+        position: relative;
+        line-height: 2rem;
+        width: 7rem;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        transition: all 0.5s;
+    }
+
+    .filterBtn:hover{
+        font-size: 0.9rem;
+        background: rgb(2,0,26);
+        background: linear-gradient(100deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
+    }
+
+    .showFilter{
+        margin: 0.5rem 0;
+    }
 }
 
-.filterBy, .filterSubitle, .filterTitle select{
-    background-color: transparent;
-    border: none;
-}
+/********/
+/*MAS DE 1200*/
+    @media (min-width: 1200px) {
+    .filterSection{
+        width: 15rem;
+        height: 86vh;
+        margin: 0.5rem 1rem;
+        padding: 0.5rem;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 0.3rem;
+        backdrop-filter: blur(1px);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+    }
 
-.filterTitle{
-    margin: 0.8rem 0 0.5rem 0;
-}
+    .filters{
+        width: 15rem;
+        margin: 0.3rem;
+        background: transparent;
+        border: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+    }
 
-.filterSubitle{
-    margin-bottom: 0.4rem;
-}
+    .filterBy, .filterSubitle, .filterTitle select{
+        background-color: transparent;
+        border: none;
+    }
 
-select {
-    border-radius: 0.2rem;
-    height: 1.5rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
+    .filterTitle{
+        margin: 0.8rem 0 0.5rem 0;
+    }
 
-option {
-    border-radius: 0.2rem;
-    height: 1.5rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
+    .filterSubitle{
+        margin-bottom: 0.4rem;
+    }
 
-.filterBtn{
-    background: rgb(2,0,36);
-    background: linear-gradient(138deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
-    text-decoration: none;
-    font-weight: 600;
-    color: white;
-    appearance: none;
-    outline: none;
-    border: none;
-    font-size: 1rem;
-    border-radius: 0.8rem;
-    position: relative;
-    line-height: 2rem;
-    width: 9rem;
-    cursor: pointer;
-    margin-top: 1.5rem;
-    transition: all 0.5s;
-}
+    select {
+        border-radius: 0.2rem;
+        height: 1.5rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
 
-.filterBtn:hover{
-    font-size: 1.1rem;
-    background: rgb(2,0,26);
-    background: linear-gradient(100deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
-}
+    option {
+        border-radius: 0.2rem;
+        height: 1.5rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
 
-.showFilter{
-    margin: 0.5rem 0;
+    .filterBtn{
+        background: rgb(2,0,36);
+        background: linear-gradient(138deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
+        text-decoration: none;
+        font-weight: 600;
+        color: white;
+        appearance: none;
+        outline: none;
+        border: none;
+        font-size: 1rem;
+        border-radius: 0.8rem;
+        position: relative;
+        line-height: 2rem;
+        width: 9rem;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        transition: all 0.5s;
+    }
+
+    .filterBtn:hover{
+        font-size: 1.1rem;
+        background: rgb(2,0,26);
+        background: linear-gradient(100deg, rgba(2,0,36,1) 0%, rgba(255, 0, 0 ,1) 43%, rgba(227,108,255,1) 100%);
+    }
+
+    .showFilter{
+        margin: 0.5rem 0;
+    }
 }

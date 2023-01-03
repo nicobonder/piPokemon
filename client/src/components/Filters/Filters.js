@@ -10,10 +10,12 @@ export default function Filters() {
   const [selectValueB, setSelectValueB] = React.useState("");
   const [orden, setOrden] = useState("");
   const [ordenB, setOrdenB] = useState("");
-  
-  const history = useHistory(); 
+
+  const history = useHistory();
   const dispatch = useDispatch();
   const pokemons = useSelector((state) => state.pokemons);
+  //const types = useSelector((state) => state.types);
+  //console.log('types en filters', types)
 
   React.useEffect(() => {
     if (!pokemons[0]) {
@@ -22,13 +24,13 @@ export default function Filters() {
     }
   }, [dispatch, pokemons]);
 
-  function handleClick(e){
+  function handleClick(e) {
     //e.preventDefault();
     const value = e.target.value;
-    console.log('resetear filtros')
-    dispatch(actions.cleanFilter(value))
+    console.log("resetear filtros");
+    dispatch(actions.cleanFilter(value));
     //history.push('/pokemons')
-  };
+  }
 
   function handleFilterType(e) {
     e.preventDefault();
@@ -42,7 +44,7 @@ export default function Filters() {
     e.preventDefault();
     const value = e.target.value;
     setSelectValueB(value);
-    console.log('filtrar por creado')
+    console.log("filtrar por creado");
     dispatch(actions.filterByCreated(value));
   }
 
@@ -50,8 +52,8 @@ export default function Filters() {
     e.preventDefault();
     const value = e.target.value;
     dispatch(actions.sortByAlphabet(value));
-    setOrden(`Ordered from ${value}`)
-    console.log('ordenado por alfabeto')
+    setOrden(`Ordered from ${value}`);
+    console.log("ordenado por alfabeto");
     history.push("/pokemons");
   }
 
@@ -59,11 +61,10 @@ export default function Filters() {
     e.preventDefault();
     const value = e.target.value;
     dispatch(actions.sortByAttack(value));
-    setOrdenB(`Ordered from ${value}`)
-    console.log('ordenado por attack')
+    setOrdenB(`Ordered from ${value}`);
+    console.log("ordenado por attack");
     history.push("/pokemons");
   }
-
 
   return (
     <div className={s.filterSection}>
@@ -75,66 +76,67 @@ export default function Filters() {
           <select
             className={s.select}
             value="default"
-              onChange={(e) => handleFilterType(e)}
+            onChange={(e) => handleFilterType(e)}
           >
             <option value="default" disabled hidden>
               Pokemon type
             </option>
-            <option value="all">all</option>
-            <option value="bug">bug</option>
-            <option value="dark">dark</option>
-            <option value="dragon">dragon</option>
-            <option value="electric">electric</option>
-            <option value="fairy">fairy</option>
-            <option value="fighting">fighting</option>
-            <option value="flying">flying</option>
-            <option value="fire">fire</option>
-            <option value="ghost">ghost</option>
-            <option value="grass">grass</option>
-            <option value="ground">ground</option>
-            <option value="ice">ice</option>
-            <option value="normal">normal</option>
-            <option value="poison">poison</option>
-            <option value="psychic">psychic</option>
-            <option value="rock">rock</option>
-            <option value="shadow">shadow</option>
-            <option value="steel">steel</option>
-            <option value="unknow">unknow</option>
-            <option value="water">water</option>
+            <option value="all">All</option>
+            <option value="bug">Bug</option>
+            <option value="dark">Dark</option>
+            <option value="dragon">Dragon</option>
+            <option value="electric">Electric</option>
+            <option value="fairy">Fairy</option>
+            <option value="fighting">Fighting</option>
+            <option value="flying">Flying</option>
+            <option value="fire">Fire</option>
+            <option value="ghost">Ghost</option>
+            <option value="grass">Grass</option>
+            <option value="ground">Ground</option>
+            <option value="ice">Ice</option>
+            <option value="normal">Normal</option>
+            <option value="poison">Poison</option>
+            <option value="psychic">Psychic</option>
+            <option value="rock">Rock</option>
+            <option value="shadow">Shadow</option>
+            <option value="steel">Steel</option>
+            <option value="unknow">Unknow</option>
+            <option value="water">Water</option>
           </select>
           {selectValue && <h3 className={s.showFilter}>{selectValue}</h3>}
-      </div>
-      
-      <div className={s.filterBy}>
-        <h3 className={s.filterSubitle}>Created in</h3>
-        <select 
-          className={s.select} 
-          value="default"  
-          onChange={e => handleFilterCreated(e)}
+        </div>
+
+        <div className={s.filterBy}>
+          <h3 className={s.filterSubitle}>Created in</h3>
+          <select
+            className={s.select}
+            value="default"
+            onChange={(e) => handleFilterCreated(e)}
           >
-          <option value="default" disabled hidden>
-            Created in
-          </option>
-          <option value="All">All</option>
-          <option value="API">API</option>
-          <option value="Data Base">Data Base</option>
-        </select>
-        {selectValueB && <h3 className={s.showFilter}>{selectValueB}</h3>}
+            <option value="default" disabled hidden>
+              Created in
+            </option>
+            <option value="All">All</option>
+            <option value="API">API</option>
+            <option value="Data Base">Data Base</option>
+          </select>
+          {selectValueB && <h3 className={s.showFilter}>{selectValueB}</h3>}
+        </div>
       </div>
-    </div>
-      
+
       <div className={s.filters}>
         <div className={s.filterBy}>
           <h3 className={s.filterSubitle}>Sort by Alphabet</h3>
-          <select
-            value="default"
-            onChange={(e) => handleSortByAlpha(e)}
-          >
+          <select value="default" onChange={(e) => handleSortByAlpha(e)}>
             <option value="default" disabled hidden>
               Sort by Alphabet
             </option>
-            <option value="a-z" onClick={(e) => handleSortByAlpha(e)}>From A to Z</option>
-            <option value="z-a" onClick={(e) => handleSortByAlpha(e)}>From Z to A</option>
+            <option value="a-z" onClick={(e) => handleSortByAlpha(e)}>
+              From A to Z
+            </option>
+            <option value="z-a" onClick={(e) => handleSortByAlpha(e)}>
+              From Z to A
+            </option>
           </select>
           {orden && <h3 className={s.showFilter}>{orden}</h3>}
         </div>
@@ -143,22 +145,25 @@ export default function Filters() {
       <div className={s.filters}>
         <div className={s.filterBy}>
           <h3 className={s.filterSubitle}>Sort by Attack</h3>
-          <select
-            value="default"
-            onChange={(e) => handleSortByAttack(e)}
-          >
+          <select value="default" onChange={(e) => handleSortByAttack(e)}>
             <option value="default" disabled hidden>
               Sort by Attack
             </option>
-            <option value="- to +" onClick={(e) => handleSortByAlpha(e)} >From - to +</option>
-            <option value="+ to -" onClick={(e) => handleSortByAlpha(e)}>From + to -</option>
+            <option value="- to +" onClick={(e) => handleSortByAlpha(e)}>
+              From - to +
+            </option>
+            <option value="+ to -" onClick={(e) => handleSortByAlpha(e)}>
+              From + to -
+            </option>
           </select>
           {ordenB && <h3 className={s.showFilter}>{ordenB}</h3>}
         </div>
       </div>
 
-      <button className={s.filterBtn} onClick={(e) => handleClick(e)}>Reset filters</button>
+      <button className={s.filterBtn} onClick={(e) => handleClick(e)}>
+        Reset filters
+      </button>
     </div>
-
   );
 }
+
