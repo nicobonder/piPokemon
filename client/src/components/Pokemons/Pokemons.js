@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import s from './Pokemons.module.css'
 import { useDispatch, useSelector } from "react-redux";
 import Paging from '../Paging/Paging';
+import logo from '../Navbar/pokeLogo.png'
 
 import * as actions from '../../redux/actions'
 
@@ -33,7 +34,7 @@ export default function Pokemons() {
       const totalPokemons = pokemons.length
       const nextPage = currentPage + 1;
       const firstIndex = nextPage * pokemonsPerPage
-      if(firstIndex === totalPokemons) return; //si el indice es = al total de poke, estoy en el ultimo poke y no puede haber next
+      if(firstIndex >= totalPokemons) return; //si el indice es = al total de poke, estoy en el ultimo poke y no puede haber next
       setItems([...pokemons].splice(firstIndex, pokemonsPerPage))
       setCurrentPage(nextPage)
     } 
@@ -56,30 +57,35 @@ export default function Pokemons() {
 
   return (
     <div className={s.pokemonsSection}>
-      <Filters />
+      <div className={s.filtered}>
+        <Filters />
+      </div>
       <div className={s.pokePaged}>
-        <div className={s.allPokemons}>
-          {currentPokemons.length > 0 ?
-            currentPokemons?.map((poke) => {
-              return (
-                <PokeCard 
-                key={poke.id} 
-                id={poke.id} 
-                name={poke.name} 
-                image={poke.img} 
-                types={poke.types}/>
-              )
-            }) : <div><h3>Loading...</h3> </div>
-          } 
-        
+          <div className={s.allPokemons}>
+            {currentPokemons.length > 0 ?
+              currentPokemons?.map((poke) => {
+                return (
+                  <PokeCard 
+                  key={poke.id} 
+                  id={poke.id} 
+                  name={poke.name} 
+                  image={poke.img} 
+                  types={poke.types}/>
+                )
+              }) : <div className={s.loading}>
+                 <img src={logo} alt='Loading Pokemons'/>
+                 <h3>LOADING</h3>
+                 </div>
+            }
         </div>
         
         <Paging
-          pokemonsPerPage={pokemonsPerPage}
+          pokemonsPerPage = {pokemonsPerPage}
           pokemons = {pokemons.length}
           paging = {paging}
           nextHandler ={nextHandler}
           prevHandler = {prevHandler}
+          currentPage = {currentPage}
         />
       </div>
     </div>  
