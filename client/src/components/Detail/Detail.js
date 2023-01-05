@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import s from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 import * as actions from "../../redux/actions";
 import { Link, useHistory } from "react-router-dom";
@@ -13,18 +14,25 @@ export default function Detail(props) {
   //console.log('detail name', pokemonDetail.name)
   //console.log('typeof pokemonDetail.types', typeof pokemonDetail.types)  
 
-  function handleDeletePokemon(e){
-    dispatch(actions.deletePokemon(props.match.params.id))
-    history.push("/pokemons");
-  }
-
-  // function handleUpdate(e){
-  //   dispatch(actions.upd)
-  // }
-
   useEffect(() => {
     dispatch(actions.getPokemonDetail(props.match.params.id));
   }, [dispatch, props.match.params.id]);
+
+  function handleDeletePokemon(){
+    const id = props.match.params.id;
+    //dispatch(actions.deletePokemon(props.match.params.id))
+    axios
+    .delete(`http://localhost:3001/pokemons/${id}`)
+    .then(() => {
+      alert("Pokemon deleted!");
+    });
+    
+    history.push("/pokemons");
+  }  
+
+  // function handleUpdate(e){
+  //   dispatch(actions.upd)  
+  // }
 
 
   return (
@@ -82,7 +90,7 @@ export default function Detail(props) {
         }
            {!pokemonDetail.createdInDB ?
           <button className={s.btnNot} disabled >Delete</button> :
-          <button className={s.btnDetail} onClick={() => handleDeletePokemon()}>Delete</button>
+          <button className={s.btnDetail} onClick={(e) => handleDeletePokemon(e)}>Delete</button>
         }
         </div>
       </div>
@@ -90,5 +98,14 @@ export default function Detail(props) {
   );
 }
 
-/*update y delete deberian estar activos solo si fueron creados en la db*/
-//en lugar de link deberia tener un boton que con un onClick despache la action para ir a getPokemon/id
+/*    const id = props.match.params.id;
+    //dispatch(actions.deletePokemon(props.match.params.id))
+    axios
+    .delete(`http://localhost:3001/pokemons/${id}`)
+    .then(() => {
+      alert("Pokemon deleted!");
+    });
+    
+    history.push("/pokemons");
+  }  
+*/

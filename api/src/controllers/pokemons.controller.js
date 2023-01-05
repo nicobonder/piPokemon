@@ -111,6 +111,19 @@ const createPokemon = async (req, res) =>{
     }
 }
 
+// const deletePokemons = async (req, res) =>{
+//     const { id } = req.params;
+//     console.log('delete id', id)
+//     const allPokemons = await getAllPokemons();
+//     const pokeFound = allPokemons.find((poke) =>{
+//         return poke.id === id
+//     })
+//     if(!pokeFound) return res.status(404).json({error: "Pokemon not found"})
+//     allPokemons = allPokemons.filter((poke) => poke.id !== id)
+//     res.sendStatus(204)
+// }
+
+
 //SOLO SIRVE PA ACTUALIZAR LOS De LA DB. VER COMO HACER PARA Q SIRVA PARA API
 const updatePokemons = async (req, res) =>{
     try {
@@ -135,7 +148,18 @@ const updatePokemons = async (req, res) =>{
     }
 }
 
-const deletePokemons = async (req, res) =>{
+
+module.exports = {
+    getAllPokemons,
+    updatePokemons,
+    createPokemon,
+    //deletePokemons,
+    //getPokemonById,
+    //getPokemonByName
+}
+
+
+/*const deletePokemons = async (req, res) =>{
     try{
         const { id } = req.params;
         await Pokemon.destroy({
@@ -147,13 +171,15 @@ const deletePokemons = async (req, res) =>{
     } catch(error){
         return res.status(500).json({ message: error.message });
     }
-}
+}*/
 
-module.exports = {
-    getAllPokemons,
-    updatePokemons,
-    createPokemon,
-    deletePokemons,
-    //getPokemonById,
-    //getPokemonByName
-}
+/*tampoco funciono:
+    const { id } = req.params;
+    console.log('delete id', id)
+    const allPokemons = await getAllPokemons();
+    const pokeFound = allPokemons.find((poke) =>{
+        return poke.id === id
+    })
+    if(!pokeFound) return res.status(404).json({error: "Pokemon not found"})
+    allPokemons = allPokemons.filter((poke) => poke.id !== id)
+    res.sendStatus(204)*/

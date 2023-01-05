@@ -129,15 +129,16 @@
         width: 100%;
     }
 
-    @keyframes load {
-        from {transform: rotate(0deg);}
-        to {transform: rotate(360deg);}
-    }
-
     .loading img{
         width: 8rem;
         height: 8rem;   
-        animation-name: load;
-        animation-duration: 2.5s;
+        margin-top: -9rem;
+        animation: load 2.5s infinite linear;
     }
+
+    @keyframes load {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(359deg);}
+    }
+    
 }

@@ -1,3 +1,4 @@
+const { json } = require("body-parser");
 const { Router } = require("express");
 const router = Router();
 
@@ -47,9 +48,9 @@ router.get('/:id', async (req, res) =>{
 
 //Ruta de creacion
 router.post('/', (createPokemon));
-//Ruta ruta para actualizar un proyecto
+//Ruta ruta para actualizar un pokemon
 router.put('/:id', updatePokemons);
-//Ruta para borrar un proyecto
-router.delete('/:id', deletePokemons);
+//Ruta para borrar un pokemon
+//router.delete('/:id', (deletePokemons))
 
 module.exports = router;

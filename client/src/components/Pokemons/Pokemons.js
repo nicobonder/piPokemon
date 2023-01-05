@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import s from './Pokemons.module.css'
 import { useDispatch, useSelector } from "react-redux";
-import Paging from '../Paging/Paging';
 import logo from '../Navbar/pokeLogo.png'
-
 import * as actions from '../../redux/actions'
 
 //importo para poder mapear todas las cards
+import Paging from '../Paging/Paging';
 import PokeCard from '../PokeCard/PokeCard';
 import Filters from '../Filters/Filters';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 export default function Pokemons() {
   const dispatch = useDispatch();
@@ -19,8 +18,8 @@ export default function Pokemons() {
 
    //PAGINADO.
    const [currentPage, setCurrentPage] = useState(1); //Pokemons va a empezar en la primera pagina
-   const [pokemonsPerPage, setPokemonsPerPage] = useState(12); //Traigo 12 poke por pagina
-   const [items, setItems] = useState([...pokemons].splice(0, pokemonsPerPage))
+   const [pokemonsPerPage, /*setPokemonsPerPage*/] = useState(12); //Traigo 12 poke por pagina
+   const [/*items*/, setItems] = useState([...pokemons].splice(0, pokemonsPerPage))
    const indexOfLastPokemon = currentPage * pokemonsPerPage //empieza en 12. Es el indice del ultimo poke que tengo en la pagina
    const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage //empieza en 0. 12-12 . Es el indice del primer pokemon
    const currentPokemons = pokemons.slice(indexOfFirstPokemon, indexOfLastPokemon) //corto los poke q quiero de la array de pokemons
@@ -58,7 +57,7 @@ export default function Pokemons() {
   return (
     <div className={s.pokemonsSection}>
       <div className={s.filtered}>
-        <Filters />
+        <Filters setCurrentPage={setCurrentPage} />
       </div>
       <div className={s.pokePaged}>
           <div className={s.allPokemons}>

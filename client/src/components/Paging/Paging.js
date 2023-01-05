@@ -18,7 +18,7 @@ export default function Paging({pokemonsPerPage, pokemons, paging, nextHandler, 
                             <button className={s.numberPage} key={number} onClick={() => paging(number)}>{number}</button>
                         ))}
             </ul>
-            <button disabled={currentPage === pageNumbers[pageNumbers.length-1]} className={s.pageBtn} onClick={() => nextHandler()}>Next <i class="fa-solid fa-caret-right"></i></button>
+            <button disabled={currentPage === pageNumbers[pageNumbers.length-1]} className={s.pageBtn} onClick={() => nextHandler()}>Next <i className="fa-solid fa-caret-right"></i></button>
         </div>
     </nav>
   )

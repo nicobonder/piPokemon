@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 
-export default function Filters() {
+export default function Filters({setCurrentPage}) {
   const [selectValue, setSelectValue] = React.useState("");
   const [selectValueB, setSelectValueB] = React.useState("");
   const [orden, setOrden] = useState("");
@@ -25,10 +25,15 @@ export default function Filters() {
   }, [dispatch, pokemons]);
 
   function handleClick(e) {
-    //e.preventDefault();
-    const value = e.target.value;
+    e.preventDefault();
+    //const value = e.target.value;
     console.log("resetear filtros");
-    dispatch(actions.cleanFilter(value));
+    dispatch(actions.getPokemons());
+    setCurrentPage(1);
+    setSelectValue("")
+    setSelectValueB("")
+    setOrden("")
+    setOrdenB("")
     //history.push('/pokemons')
   }
 
@@ -38,6 +43,7 @@ export default function Filters() {
     setSelectValue(value); //para mostrarle a usuario lo que eligio
     dispatch(actions.filterByType(value)); //disapara la action del reducer
     history.push("/pokemons");
+    setCurrentPage(1);
   }
 
   function handleFilterCreated(e) {
@@ -46,6 +52,7 @@ export default function Filters() {
     setSelectValueB(value);
     console.log("filtrar por creado");
     dispatch(actions.filterByCreated(value));
+    setCurrentPage(1);
   }
 
   function handleSortByAlpha(e) {
@@ -55,6 +62,7 @@ export default function Filters() {
     setOrden(`Ordered from ${value}`);
     console.log("ordenado por alfabeto");
     history.push("/pokemons");
+    setCurrentPage(1);
   }
 
   function handleSortByAttack(e) {
@@ -64,6 +72,7 @@ export default function Filters() {
     setOrdenB(`Ordered from ${value}`);
     console.log("ordenado por attack");
     history.push("/pokemons");
+    setCurrentPage(1);
   }
 
   return (

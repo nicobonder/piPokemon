@@ -3,7 +3,7 @@ import axios from 'axios';
 export const GET_POKEMONS = "GET_POKEMONS";
 export const GET_POKEMON_DETAIL = "GET_POKEMON_DETAIL";
 export const CREATE_POKEMON = "CREATE_POKEMON";
-export const DELETE_POKEMON = "CREATE_POKEMON";
+export const DELETE_POKEMON = "DELETE_POKEMON";
 export const GET_TYPES = "GET_TYPES";
 
 //Filtos y ordenamiento
@@ -57,9 +57,25 @@ export const createPokemon = (pokemon) => {
     //return { type: CREATE_POKEMON, payload: pokemon}
 };
 
-export const deletePokemon = (id) => {
-    return { type: DELETE_POKEMON, payload: id}
-};
+// export const deletePokemon = (id) => {
+//     return async function(dispatch){
+//         const deletePoke = await axios.delete(`http://localhost:3001/pokemons/${id}`, id)
+//         dispatch({type: DELETE_POKEMON, payload: deletePoke})
+//     }
+// };
+
+//probar
+// export function deletePokemon(id){
+//     return async function(dispatch){
+//         try{
+//             var json = await axios.delete('/delete-pokemons/' + id);
+//             return dispatch({ type: "DELETE_POKEMON", payload: json.data})
+//         }catch(error){
+//             console.log(error)
+//         }
+//     }
+
+
 
 export const getTypes = () => {
     return async function(dispatch){
@@ -90,8 +106,8 @@ export const filterByCreated = (value) => {
     return {type: FILTER_BY_CREATED, payload: value}
 }
 
-export const cleanFilter = (payload) => {
-    return {type: CLEAN_FILTER, payload}
+export const cleanFilter = () => {
+    return {type: CLEAN_FILTER}
 }
 
 /* stackoverflow

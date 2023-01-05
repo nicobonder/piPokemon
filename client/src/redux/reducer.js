@@ -2,7 +2,7 @@ import {
   GET_POKEMONS,
   GET_POKEMON_DETAIL,
   CREATE_POKEMON,
-  DELETE_POKEMON,
+  //DELETE_POKEMON,
   GET_TYPES,
   SORT_BY_ALPHABET,
   SORT_BY_ATTACK,
@@ -65,13 +65,14 @@ const rootReducer = (state = initialState, action) => {
           img,
         }),
       };
-    case DELETE_POKEMON:
-      return {
-        ...state,
-        pokemons: state.pokemons.filter(
-          (pokemon) => pokemon.id !== action.payload
-        ),
-      };
+    // case DELETE_POKEMON:
+    //   const deleted = action.payload
+    //   const remove = state.pokemons.filter((pokemon) => pokemon.id !== deleted
+    //   );
+    //   return {
+    //     ...state,
+    //     pokemons: remove
+    //   };
 
     //SORTS Y FILTERS
     case SORT_BY_ALPHABET:
@@ -168,11 +169,11 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case CLEAN_FILTER:
+      const all = state.pokemons
       return {
         ...state,
-        pokemons: state.pokemons,
-        types: state.types,
-        filterByType: state.filterByType,
+        pokemons: all,
+       
       };
     default:
       return { ...state };

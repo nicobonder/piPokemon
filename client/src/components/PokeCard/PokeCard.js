@@ -10,7 +10,7 @@ export default function PokeCard(props) {
     <div className={s.pokeCard}>
       <Link className={s.pokeLink} to={`/pokemons/${props.id}`}>
         <h2 className={s.cardTitle}>
-          {props.name.charAt(0).toUpperCase() + props.name.substring(1)} - #{props.id}
+          {props.name.charAt(0).toUpperCase() + props.name.substring(1)}
         </h2>
       <img className={s.pokeImage} src={props.image} alt={props.name} />
       </Link>
