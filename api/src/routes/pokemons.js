@@ -6,11 +6,7 @@ const { Pokemon, Type } = require("../db");
 const { 
     getAllPokemons,
     createPokemon, 
-    updatePokemons, 
-    //deletePokemons, 
-    //getPokemonById,
-    //getPokemonByName,
-    
+    updatePokemons,     
 } = require('../controllers/pokemons.controller.js');
 
 //const router = require("express").Router();
@@ -52,12 +48,11 @@ router.post('/', (createPokemon));
 router.put('/:id', updatePokemons);
 //Ruta para borrar un pokemon
 router.delete('/:id', (req, res) => {
-    // Obtén el ID del registro a eliminar del parámetro de la ruta
+    // Obtengo el ID del registro a eliminar del parámetro de la ruta
     const pokedId = req.params.id;
-  
-    // Elimina el registro de la base de datos con Sequelize
+    // Elimino el registro de la DB con destroy de Sequelize
     Pokemon.destroy({ where: { id: pokedId } })
-      .then(() => res.sendStatus(204)) // Envía un código de estado de éxito sin contenido
+      .then(() => res.sendStatus(204)) // Envio un codigo de estado de exito sin contenido
       .catch((error) => {
         console.error(error);
         res.sendStatus(500);

@@ -96,30 +96,3 @@ export const filterByCreated = (value) => {
 export const cleanFilter = () => {
     return {type: CLEAN_FILTER}
 }
-
-/* stackoverflow
-export const searchPokemon = (name) => ({
-    type: SEARCH_POKEMON, 
-    payload: name.toLowerCase()
-}) 
-*/
-
-/*    return async function(dispatch) {
-        try {
-            let info =  await axios.get("/pokemons?name=" + name);
-            return dispatch({
-                type: "GET_POKEMON_DETAIL",
-                payload: info.data
-            })
-        } catch(error){
-            return 'We couldnt find that Pokemon'
-        }     
-*/
-
-
-/*// export const deletePokemon = (id) => {
-//     return async function(dispatch){
-//         const deletePoke = await axios.delete(`http://localhost:3001/pokemons/${id}`, id)
-//         dispatch({type: DELETE_POKEMON, payload: deletePoke})
-//     }
-// };*/

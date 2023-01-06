@@ -20,16 +20,7 @@ export default function Detail(props) {
 
   function handleDeletePokemon(){
     dispatch(actions.deletePokemon(props.match.params.id))
-
-  //   const id = props.match.params.id;
-  //   //dispatch(actions.deletePokemon(props.match.params.id))
-  //   axios
-  //   .delete(`http://localhost:3001/pokemons/${id}`)
-  //   .then(() => {
-  //     alert("Pokemon deleted!");
-  //   });
-    
-  history.push("/pokemons");
+    history.push("/pokemons");
   }  
 
   // function handleUpdate(e){
@@ -99,15 +90,3 @@ export default function Detail(props) {
     </div>
   );
 }
-
-/*    const id = props.match.params.id;
-    //dispatch(actions.deletePokemon(props.match.params.id))
-    axios
-    .delete(`http://localhost:3001/pokemons/${id}`)
-    .then(() => {
-      alert("Pokemon deleted!");
-    });
-    
-    history.push("/pokemons");
-  }  
-*/
