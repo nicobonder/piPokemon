@@ -58,7 +58,10 @@ export const createPokemon = (pokemon) => {
 };
 
 export const deletePokemon = (pokemonId) => {
-    return ({type: DELETE_POKEMON, payload: pokemonId})
+    return async function(dispatch){
+        const deletePoke = await axios.delete(`http://localhost:3001/pokemons/${pokemonId}`, pokemonId )
+        dispatch({type: DELETE_POKEMON, payload: deletePoke})
+    }
 }
     
 export const getTypes = () => {

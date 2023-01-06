@@ -18,7 +18,9 @@ export default function Detail(props) {
     dispatch(actions.getPokemonDetail(props.match.params.id));
   }, [dispatch, props.match.params.id]);
 
-  // function handleDeletePokemon(){
+  function handleDeletePokemon(){
+    dispatch(actions.deletePokemon(props.match.params.id))
+
   //   const id = props.match.params.id;
   //   //dispatch(actions.deletePokemon(props.match.params.id))
   //   axios
@@ -27,8 +29,8 @@ export default function Detail(props) {
   //     alert("Pokemon deleted!");
   //   });
     
-  //   history.push("/pokemons");
-  // }  
+  history.push("/pokemons");
+  }  
 
   // function handleUpdate(e){
   //   dispatch(actions.upd)  
@@ -90,7 +92,7 @@ export default function Detail(props) {
         }
            {!pokemonDetail.createdInDB ?
           <button className={s.btnNot} disabled >Delete</button> :
-          <button className={s.btnDetail} onClick={() => actions.deletePokemon(pokemonDetail.id)}>Delete</button>
+          <button className={s.btnDetail} onClick={handleDeletePokemon}>Delete</button>
         }
         </div>
       </div>
