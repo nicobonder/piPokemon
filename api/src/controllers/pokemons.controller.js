@@ -113,11 +113,23 @@ const createPokemon = async (req, res) =>{
 
 // const deletePokemons = async (req, res) =>{
 //     const { id } = req.params;
+
+//     Pokemon.findByPk(id, (error, pokemon) => {
+//         if(error) res.status(500).send({message: 'Error removing Pokemon'})
+        
+//         pokemon.destroy(error => {
+//             if(error) res.status(500).send({message: 'Error removing Pokemon'})
+//             res.status(200).send({message: 'Pokemon removed.'})
+//         })
+//     })
+// }    
+
+//     const { id } = req.params;
 //     console.log('delete id', id)
 //     const allPokemons = await getAllPokemons();
-//     const pokeFound = allPokemons.find((poke) =>{
-//         return poke.id === id
-//     })
+//     const pokeFound = await Pokemon.destroy({
+//         where: {id: id}
+//     });
 //     if(!pokeFound) return res.status(404).json({error: "Pokemon not found"})
 //     allPokemons = allPokemons.filter((poke) => poke.id !== id)
 //     res.sendStatus(204)

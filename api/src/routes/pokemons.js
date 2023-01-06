@@ -1,13 +1,13 @@
 const { json } = require("body-parser");
 const { Router } = require("express");
 const router = Router();
-
+const { Pokemon, Type } = require("../db"); 
 
 const { 
     getAllPokemons,
     createPokemon, 
     updatePokemons, 
-    deletePokemons, 
+    //deletePokemons, 
     //getPokemonById,
     //getPokemonByName,
     
@@ -51,6 +51,17 @@ router.post('/', (createPokemon));
 //Ruta ruta para actualizar un pokemon
 router.put('/:id', updatePokemons);
 //Ruta para borrar un pokemon
-//router.delete('/:id', (deletePokemons))
+router.delete('/:id', (req, res) => {
+    // Obtén el ID del registro a eliminar del parámetro de la ruta
+    const pokedId = req.params.id;
+  
+    // Elimina el registro de la base de datos con Sequelize
+    Pokemon.destroy({ where: { id: pokedId } })
+      .then(() => res.sendStatus(204)) // Envía un código de estado de éxito sin contenido
+      .catch((error) => {
+        console.error(error);
+        res.sendStatus(500);
+    });
+})
 
 module.exports = router;

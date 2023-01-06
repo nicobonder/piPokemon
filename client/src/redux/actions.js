@@ -57,26 +57,10 @@ export const createPokemon = (pokemon) => {
     //return { type: CREATE_POKEMON, payload: pokemon}
 };
 
-// export const deletePokemon = (id) => {
-//     return async function(dispatch){
-//         const deletePoke = await axios.delete(`http://localhost:3001/pokemons/${id}`, id)
-//         dispatch({type: DELETE_POKEMON, payload: deletePoke})
-//     }
-// };
-
-//probar
-// export function deletePokemon(id){
-//     return async function(dispatch){
-//         try{
-//             var json = await axios.delete('/delete-pokemons/' + id);
-//             return dispatch({ type: "DELETE_POKEMON", payload: json.data})
-//         }catch(error){
-//             console.log(error)
-//         }
-//     }
-
-
-
+export const deletePokemon = (pokemonId) => {
+    return ({type: DELETE_POKEMON, payload: pokemonId})
+}
+    
 export const getTypes = () => {
     return async function(dispatch){
         return fetch('http://localhost:3001/types')
@@ -128,3 +112,11 @@ export const searchPokemon = (name) => ({
             return 'We couldnt find that Pokemon'
         }     
 */
+
+
+/*// export const deletePokemon = (id) => {
+//     return async function(dispatch){
+//         const deletePoke = await axios.delete(`http://localhost:3001/pokemons/${id}`, id)
+//         dispatch({type: DELETE_POKEMON, payload: deletePoke})
+//     }
+// };*/
