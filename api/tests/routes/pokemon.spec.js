@@ -1,4 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
+
+/*TEST PARA RUTAS*/
+
 const { expect } = require('chai');
 const session = require('supertest-session');
 const app = require('../../src/app.js');

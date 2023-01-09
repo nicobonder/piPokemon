@@ -111,87 +111,32 @@ const createPokemon = async (req, res) =>{
     }
 }
 
-// const deletePokemons = async (req, res) =>{
-//     const { id } = req.params;
+// const updatePokemons = async (req, res) =>{
+//     try {
+//         const { id } = req.params;
+//         const { name, attack, defense, speed, hp, height, weight } = req.body;
+//         //Busco un poke por su id
+//         const pokemon = await Pokemon.findByPk(id);
+//         //lo actualizo con los valores que recibo por body.
+//         pokemon.name = name;
+//         pokemon.attack = attack;
+//         pokemon.defense = defense;
+//         pokemon.speed = speed;
+//         pokemon.hp = hp;
+//         pokemon.height = height;
+//         pokemon.weight = weight;
+//         //lo guardo y lo devuelvo
+//         await pokemon.save();
+//         res.json(pokemon);
 
-//     Pokemon.findByPk(id, (error, pokemon) => {
-//         if(error) res.status(500).send({message: 'Error removing Pokemon'})
-        
-//         pokemon.destroy(error => {
-//             if(error) res.status(500).send({message: 'Error removing Pokemon'})
-//             res.status(200).send({message: 'Pokemon removed.'})
-//         })
-//     })
-// }    
-
-//     const { id } = req.params;
-//     console.log('delete id', id)
-//     const allPokemons = await getAllPokemons();
-//     const pokeFound = await Pokemon.destroy({
-//         where: {id: id}
-//     });
-//     if(!pokeFound) return res.status(404).json({error: "Pokemon not found"})
-//     allPokemons = allPokemons.filter((poke) => poke.id !== id)
-//     res.sendStatus(204)
+//     } catch(error){
+//         return res.status(500).json({ message: error.message })
+//     }
 // }
-
-
-//SOLO SIRVE PA ACTUALIZAR LOS De LA DB. VER COMO HACER PARA Q SIRVA PARA API
-const updatePokemons = async (req, res) =>{
-    try {
-        const { id } = req.params;
-        const { name, attack, defense, speed, hp, height, weight } = req.body;
-        //Busco un poke por su id
-        const pokemon = await Pokemon.findByPk(id);
-        //lo actualizo con los valores que recibo por body.
-        pokemon.name = name;
-        pokemon.attack = attack;
-        pokemon.defense = defense;
-        pokemon.speed = speed;
-        pokemon.hp = hp;
-        pokemon.height = height;
-        pokemon.weight = weight;
-        //lo guardo y lo devuelvo
-        await pokemon.save();
-        res.json(pokemon);
-
-    } catch(error){
-        return res.status(500).json({ message: error.message })
-    }
-}
 
 
 module.exports = {
     getAllPokemons,
-    updatePokemons,
+    //updatePokemons,
     createPokemon,
-    //deletePokemons,
-    //getPokemonById,
-    //getPokemonByName
 }
-
-
-/*const deletePokemons = async (req, res) =>{
-    try{
-        const { id } = req.params;
-        await Pokemon.destroy({
-            where: {
-                id,
-            },
-        });
-        res.sendStatus(204);
-    } catch(error){
-        return res.status(500).json({ message: error.message });
-    }
-}*/
-
-/*tampoco funciono:
-    const { id } = req.params;
-    console.log('delete id', id)
-    const allPokemons = await getAllPokemons();
-    const pokeFound = allPokemons.find((poke) =>{
-        return poke.id === id
-    })
-    if(!pokeFound) return res.status(404).json({error: "Pokemon not found"})
-    allPokemons = allPokemons.filter((poke) => poke.id !== id)
-    res.sendStatus(204)*/

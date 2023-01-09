@@ -10,6 +10,7 @@ import {
   FILTER_BY_TYPE,
   SEARCH_POKEMON,
   CLEAN_FILTER,
+  UPDATE_POKEMON,
 } from "./actions";
 
 const initialState = {
@@ -65,6 +66,15 @@ const rootReducer = (state = initialState, action) => {
           img,
         }),
       };
+
+    case UPDATE_POKEMON:
+      const index = state.pokemons.findIndex((poke) => poke.id === action.payload.id);
+      // Creo una copia del estado y actualiza el elemento en la copia
+      const newState = { ...state };
+      newState.pokemons[index] = action.payload;
+      // Devuelve la copia actualizada del estado
+      return newState;
+
     case DELETE_POKEMON:
       const deleted = action.payload
       const remove = state.pokemons.filter((pokemon) => pokemon.id !== deleted

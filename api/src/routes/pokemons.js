@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
             if(pokeName.length){
                 res.status(200).send(pokeName)
             } else {
-                res.status(404).send('>>I am sorry, we couldnt find that pokemon.');
+                res.status(404).send('Sorry, we couldnt find that pokemon.');
             }
         } else {
             res.status(200).send(allPokemons)
@@ -38,14 +38,27 @@ router.get('/:id', async (req, res) =>{
 
     if(id){ //si me pasaron un id valido, filtro y devuelvo
         let pokeName = pokeById.filter(poke => poke.id == id)
-        pokeName.length ? res.status(200).json(pokeName) : res.status(404).send('I am sorry, we couldnt find that pokemon.');  //si el id no es valido devuelvo mensaje.
+        pokeName.length ? res.status(200).json(pokeName) : res.status(404).send('Sorry, we couldnt find that pokemon.');  //si el id no es valido devuelvo mensaje.
         }
 });
 
 //Ruta de creacion
 router.post('/', (createPokemon));
 //Ruta ruta para actualizar un pokemon
-router.put('/:id', updatePokemons);
+router.put('/:id', (req, res) => {
+    const pokeId = req.params.id;
+    const updates = req.body;
+    Pokemon.update(updates, 
+        { where: { id: pokeId } })
+    .then(() => {
+        res.sendStatus({message: 'Pokemon updated.'});
+    }) // Envio un codigo de estado de exito sin contenido
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send({ message: 'Error updating the pokemon' });
+  });
+})
+
 //Ruta para borrar un pokemon
 router.delete('/:id', (req, res) => {
     // Obtengo el ID del registro a eliminar del parámetro de la ruta

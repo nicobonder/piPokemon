@@ -4,6 +4,7 @@ export const GET_POKEMONS = "GET_POKEMONS";
 export const GET_POKEMON_DETAIL = "GET_POKEMON_DETAIL";
 export const CREATE_POKEMON = "CREATE_POKEMON";
 export const DELETE_POKEMON = "DELETE_POKEMON";
+export const UPDATE_POKEMON = "UPDATE_POKEMON";
 export const GET_TYPES = "GET_TYPES";
 
 //Filtos y ordenamiento
@@ -63,7 +64,21 @@ export const deletePokemon = (pokemonId) => {
         dispatch({type: DELETE_POKEMON, payload: deletePoke})
     }
 }
-    
+
+export const updatePokemon = (updatePoke) => {
+    console.log('updatePokemon en actions')
+    return async function(dispatch){
+        await axios.put(`http://localhost:3001/pokemons/${updatePoke.id}`, updatePoke)
+        .then((res) => {
+            dispatch({type: UPDATE_POKEMON, payload: res.data})
+            console.log('res.data en actions', res.data)
+        })
+        .catch((err) =>{
+            console.log(err)
+        });
+    }
+}
+
 export const getTypes = () => {
     return async function(dispatch){
         return fetch('http://localhost:3001/types')

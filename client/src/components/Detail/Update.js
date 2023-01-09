@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import s from "./Create.module.css";
-import { useHistory } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
+import { updatePokemon } from "../../redux/actions";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 import * as actions from "../../redux/actions";
+import s from "../Create/Create.module.css";
 
 //FUNCION VALIDADORA
 function validate(input){  //va a recibir el estado input con los cambios detectados por los handlers
@@ -46,34 +47,25 @@ function validate(input){  //va a recibir el estado input con los cambios detect
       return errors;      //se retorna el obj errors con la prop y el string correspondiente. let errors = {name: 'se requiere un nombre'}
 }
 
-export default function Create() {
-  const types = useSelector((state) => state.types);
+export default function Update(props) {
+  const pokemonDetail = useSelector((state) => state.pokemons.find((pokemon) => pokemon.id === props.match.params.id));
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({e:''}); 
+  
   const [input, setInput] = useState({
-    name: "",
-    attack: 0,
-    defense: 0,
-    speed: 0,
-    hp: 0,
-    height: 0,
-    weight: 0,
-    img: "",
-    types: [],
+    id: props.match.params.id,
+    name: pokemonDetail.name,
+    attack: pokemonDetail.attack,
+    defense: pokemonDetail.defense,
+    speed: pokemonDetail.speed,
+    hp: pokemonDetail.hp,
+    height: pokemonDetail.height,
+    weight: pokemonDetail.weight,
+    img: pokemonDetail.img,
+    types: pokemonDetail.types,
     createdInDB: true
   });
-
-  const handleChange = (e) => {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    })
-    setErrors(validate({
-      ...input,
-      [e.target.name]: e.target.value,
-    }))
-  };
 
   function handleSelect(e) {
     //recibe el tipo que se seleccionó en el selector
@@ -89,25 +81,38 @@ export default function Create() {
             types: [...input.types, e.target.value]
     }))
   }
-
+    // Llamo a la accion
+    // Envía una solicitud PATCH al servidor para actualizar el elemento
+    
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(actions.createPokemon(input));
-    console.log("form submited");
-    setInput({
-      //resetea el estado del input
-      name: "",
-      attack: 0,
-      defense: 0,
-      speed: 0,
-      hp: 0,
-      height: 0,
-      weight: 0,
-      img: "",
-      types: [],
+    const updatePoke = {
+      id: pokemonDetail.id,
+      name: input.name,
+      attack: input.attack,
+      defense: input.defense,
+      speed: input.speed,
+      hp: input.hp,
+      height: input.height,
+      weight: input.weight,
+      img: input.img,
+      types: input.types,
       createdInDB: true
-    });
-    history.push("/pokemons"); //despues redirige para ver todos los poke
+    } 
+    dispatch(updatePokemon(updatePoke));
+    history.push(`/pokemons/${props.match.params.id}`); //despues redirige para ver el poke
+    console.log('submit update')
+  };
+
+  const handleChange = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+    setErrors(validate({
+      ...input,
+      [e.target.name]: e.target.value,
+    }))
   };
 
   function handleDelete(el) {
@@ -123,11 +128,10 @@ export default function Create() {
   }, [dispatch]);
 
   return (
-    <div className={s.formSection}>
-      <h2>Create your own Pokemon</h2>
-      <div className={s.form}>
-        <form action="POST" onSubmit={(e) => handleSubmit(e)}>
-          <div className={s.inputs}>
+    <div>
+      <h1>Edit your Pokemon</h1>
+      <form onSubmit={handleSubmit}>
+      <div className={s.inputs}>
             <div className={s.input}>
               <label htmlFor="name">Name: </label>
               <input
@@ -279,10 +283,20 @@ export default function Create() {
           <div className={s.divBtn}>
           {Object.keys(errors).length || !input.types.length ? 
               <button className={s.notSubmit} type='submit' disabled>please complete the form</button> : 
-              <button className={s.formBtn} type='submit'>CREATE</button> } 
+              <button className={s.formBtn} type='submit'>UPDATE</button> } 
           </div>
-        </form>
-      </div>
+      </form>
     </div>
   );
 }
+
+/*  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .patch(`http://localhost:3001/pokemons/${pokemonDetail.id}`, { input })
+      .then(() => {
+        dispatch(updatePokemon(props.match.params.id, input));
+      });
+    history.push(`/pokemons/${props.match.params.id}`); //despues redirige para ver el poke
+    console.log('submit update')
+  };*/

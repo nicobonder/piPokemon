@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import s from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
+//import axios from "axios";
 
 import * as actions from "../../redux/actions";
 import { Link, useHistory } from "react-router-dom";
@@ -10,9 +10,7 @@ export default function Detail(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const pokemonDetail = useSelector((state) => state.pokemonDetail);
-  //console.log('detail', pokemonDetail)
-  //console.log('detail name', pokemonDetail.name)
-  //console.log('typeof pokemonDetail.types', typeof pokemonDetail.types)  
+   //console.log('typeof pokemonDetail.types', typeof pokemonDetail.types)  
 
   useEffect(() => {
     dispatch(actions.getPokemonDetail(props.match.params.id));
@@ -22,6 +20,11 @@ export default function Detail(props) {
     dispatch(actions.deletePokemon(props.match.params.id))
     history.push("/pokemons");
   }  
+
+  // function handleUpdatePokemon(){
+  //   dispatch(actions.updatePokemon(props.match.params.id))
+  //   history.push("/pokemons");
+  // }  
 
   // function handleUpdate(e){
   //   dispatch(actions.upd)  
@@ -79,7 +82,7 @@ export default function Detail(props) {
         <div className={s.btnDiv}>
           {!pokemonDetail.createdInDB ?
           <button className={s.btnNot} type='submit' disabled >Update</button> :
-          <button className={s.btnDetail} type='submit'>Update</button>
+          <Link className={s.btnDetail} to={`/pokemons/${props.match.params.id}/edit`}>Update</Link>
         }
            {!pokemonDetail.createdInDB ?
           <button className={s.btnNot} disabled >Delete</button> :
@@ -90,3 +93,5 @@ export default function Detail(props) {
     </div>
   );
 }
+
+/*<button className={s.btnDetail} onClick={props.toggleEdit}>Update</button>*/
