@@ -4,7 +4,7 @@ import { updatePokemon } from "../../redux/actions";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import * as actions from "../../redux/actions";
-import s from "../Create/Create.module.css";
+import s from "./Update.module.css";
 
 //FUNCION VALIDADORA
 function validate(input){  //va a recibir el estado input con los cambios detectados por los handlers
@@ -128,9 +128,9 @@ export default function Update(props) {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={s.formSection}>
       <h1>Edit your Pokemon</h1>
-      <form onSubmit={handleSubmit}>
+      <form className={s.form} onSubmit={handleSubmit}>
       <div className={s.inputs}>
             <div className={s.input}>
               <label htmlFor="name">Name: </label>
