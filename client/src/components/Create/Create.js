@@ -64,6 +64,9 @@ export default function Create() {
     createdInDB: true
   });
 
+  const sortTypes = types.sort((x, y) => x.name.localeCompare(y.name));
+  console.log('sortTypes', sortTypes)
+
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -231,25 +234,9 @@ export default function Create() {
                   <option value="default" disabled hidden>
                     Pokemon type
                   </option>
-                  <option value="bug">bug</option>
-                  <option value="dark">dark</option>
-                  <option value="dragon">dragon</option>
-                  <option value="electric">electric</option>
-                  <option value="fairy">fairy</option>
-                  <option value="fighting">fighting</option>
-                  <option value="flying">flying</option>
-                  <option value="fire">fire</option>
-                  <option value="ghost">ghost</option>
-                  <option value="grass">grass</option>
-                  <option value="ground">ground</option>
-                  <option value="ice">ice</option>
-                  <option value="poison">poison</option>
-                  <option value="psychic">psychic</option>
-                  <option value="rock">rock</option>
-                  <option value="shadow">shadow</option>
-                  <option value="steel">steel</option>
-                  <option value="unknow">unknow</option>
-                  <option value="water">water</option>
+                  {types.map((type) => (
+                  <option value={type.name}>{type.name[0].toUpperCase() + type.name.slice(1)}</option>
+                 ))}
                 </select>
               ) : (
                 <p className={s.error}>cannot have more than 2 types</p>
@@ -286,3 +273,39 @@ export default function Create() {
     </div>
   );
 }
+
+/*
+
+            <div className={s.typeForm}>
+              {input.types.length < 2 ? ( //si ya eligio 2, no se muestran las opciones
+                <select value="default" onChange={(e) => handleSelect(e)}>
+                  
+                  {/*Cuando se selecciona una opcion se ejecuta handleSelect con esa selección*/
+            //       <option value="default" disabled hidden>
+            //         Pokemon type
+            //       </option>
+            //       <option value="bug">bug</option>
+            //       <option value="dark">dark</option>
+            //       <option value="dragon">dragon</option>
+            //       <option value="electric">electric</option>
+            //       <option value="fairy">fairy</option>
+            //       <option value="fighting">fighting</option>
+            //       <option value="flying">flying</option>
+            //       <option value="fire">fire</option>
+            //       <option value="ghost">ghost</option>
+            //       <option value="grass">grass</option>
+            //       <option value="ground">ground</option>
+            //       <option value="ice">ice</option>
+            //       <option value="poison">poison</option>
+            //       <option value="psychic">psychic</option>
+            //       <option value="rock">rock</option>
+            //       <option value="shadow">shadow</option>
+            //       <option value="steel">steel</option>
+            //       <option value="unknow">unknow</option>
+            //       <option value="water">water</option>
+            //     </select>
+            //   ) : (
+            //     <p className={s.error}>cannot have more than 2 types</p>
+            //   )}
+            // </div>
+            // {errors.types && <p className={s.error}>{errors.types}</p>}

@@ -13,8 +13,8 @@ import Filters from '../Filters/Filters';
 export default function Pokemons() {
   const dispatch = useDispatch();
   const pokemons = useSelector((state)=> state.pokemons);
-  const types = useSelector((state)=> state.types);
-  const filterByType = useSelector((state)=> state.filterByType);
+  //const types = useSelector((state)=> state.types);
+  //const filterByType = useSelector((state)=> state.filterByType);
 
    //PAGINADO.
    const [currentPage, setCurrentPage] = useState(1); //Pokemons va a empezar en la primera pagina
@@ -50,9 +50,6 @@ export default function Pokemons() {
     dispatch(actions.getPokemons());
     dispatch(actions.getTypes());
   },[dispatch])
-
-  console.log('filteredBytype', filterByType)
-
 
   return (
     <div className={s.pokemonsSection}>

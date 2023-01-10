@@ -14,8 +14,9 @@ export default function Filters({setCurrentPage}) {
   const history = useHistory();
   const dispatch = useDispatch();
   const pokemons = useSelector((state) => state.pokemons);
-  //const types = useSelector((state) => state.types);
-  //console.log('types en filters', types)
+  const types = useSelector((state) => state.types);
+  const sortTypes = types.sort((x, y) => x.name.localeCompare(y.name));
+  console.log('sortTypes en filters', sortTypes)
 
   React.useEffect(() => {
     if (!pokemons[0]) {
@@ -87,30 +88,11 @@ export default function Filters({setCurrentPage}) {
             value="default"
             onChange={(e) => handleFilterType(e)}
           >
-            <option value="default" disabled hidden>
-              Pokemon type
-            </option>
-            <option value="all">All</option>
-            <option value="bug">Bug</option>
-            <option value="dark">Dark</option>
-            <option value="dragon">Dragon</option>
-            <option value="electric">Electric</option>
-            <option value="fairy">Fairy</option>
-            <option value="fighting">Fighting</option>
-            <option value="flying">Flying</option>
-            <option value="fire">Fire</option>
-            <option value="ghost">Ghost</option>
-            <option value="grass">Grass</option>
-            <option value="ground">Ground</option>
-            <option value="ice">Ice</option>
-            <option value="normal">Normal</option>
-            <option value="poison">Poison</option>
-            <option value="psychic">Psychic</option>
-            <option value="rock">Rock</option>
-            <option value="shadow">Shadow</option>
-            <option value="steel">Steel</option>
-            <option value="unknow">Unknow</option>
-            <option value="water">Water</option>
+            <option value="default" disabled hidden>Pokemon type</option>
+            <option value="All">All</option>
+            {types.map((type) => (
+                  <option value={type.name}>{type.name[0].toUpperCase() + type.name.slice(1)}</option>
+                 ))}
           </select>
           {selectValue && <h3 className={s.showFilter}>{selectValue}</h3>}
         </div>

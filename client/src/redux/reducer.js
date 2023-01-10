@@ -18,7 +18,7 @@ const initialState = {
   allPokemons: [],
   pokemonDetail: {},
   types: [],
-  filterByType: [],
+  //filterByType: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -68,7 +68,9 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case UPDATE_POKEMON:
-      const index = state.pokemons.findIndex((poke) => poke.id === action.payload.id);
+      const index = state.pokemons.findIndex(
+        (poke) => poke.id === action.payload.id
+      );
       // Creo una copia del estado y actualiza el elemento en la copia
       const newState = { ...state };
       newState.pokemons[index] = action.payload;
@@ -76,39 +78,66 @@ const rootReducer = (state = initialState, action) => {
       return newState;
 
     case DELETE_POKEMON:
-      const deleted = action.payload
-      const remove = state.pokemons.filter((pokemon) => pokemon.id !== deleted
-      );
-      
+      const deleted = action.payload;
+      const remove = state.pokemons.filter((pokemon) => pokemon.id !== deleted);
+
       return {
         ...state,
-        pokemons: remove
+        pokemons: remove,
       };
 
     //SORTS Y FILTERS
+    case FILTER_BY_CREATED:
+      let created = state.allPokemons.filter((poke) => poke.createdInDB); //filtro los q tienen la prop createdInDB
+      let apiPoke = state.allPokemons.filter((poke) => !poke.createdInDB); //filtro los q NO tienen la prop createdInDB
+      let createdFilter = action.payload === "Data Base" ? created : apiPoke; //el ternario hace que al aplicar el filtro 
+                                                //si se cumple muestra los creados y si es false muestra los que vienen de la API
+      return {
+        ...state,                                 //el state pokemons tiene un ternario q si el value es All muestra todos los poke
+        pokemons: action.payload === "All" ? state.allPokemons : createdFilter, //si no, muestra el resultado de createdFilter
+      };                                                                        
+
+    case FILTER_BY_TYPE:
+      let type = action.payload;
+      let allPoke = state.allPokemons; //todos los poke
+      let pokemonFiltered = allPoke.filter((poke) =>
+        poke.types.includes(type) //los poke que tengan el type elegido
+      ); //si elijo All muestr todos los poke y si no, muestro los q coinciden con el filtro
+      let test = action.payload === "all" ? allPoke : pokemonFiltered;
+
+      if (pokemonFiltered.length > 0) {
+        return {
+          ...state,
+          pokemons: test,
+        };
+      } else {
+        return {
+          ...state, //si no hay ningun poke con ese type, muestro todos los poke
+          pokemons: state.allPokemons,
+        };
+      }
+
     case SORT_BY_ALPHABET:
       const sortAlpha =
         action.payload === "a-z"
           ? state.pokemons.sort((a, b) => {
-            if (a.name.toLowerCase() > b.name.toLowerCase()) {
-              return 1;
-            }
-            if (a.name.toLowerCase() < b.name.toLowerCase()) {
-              return -1;
-            }
-            return 0;
-          })
-        : state.pokemons.sort((a, b) => {
-            if (a.name.toLowerCase() > b.name.toLowerCase()) {
-              return -1;
-            }
-            if (a.name.toLowerCase() < b.name.toLowerCase()) {
-              return 1;
-            }
-            return 0;
-          });
-            console.log("state.pokemons alpha", state.pokemons);
-            console.log("sortedPoke alpha", sortAlpha);
+              if (a.name.toLowerCase() > b.name.toLowerCase()) {
+                return 1;
+              }
+              if (a.name.toLowerCase() < b.name.toLowerCase()) {
+                return -1;
+              }
+              return 0;
+            })
+          : state.pokemons.sort((a, b) => {
+              if (a.name.toLowerCase() > b.name.toLowerCase()) {
+                return -1;
+              }
+              if (a.name.toLowerCase() < b.name.toLowerCase()) {
+                return 1;
+              }
+              return 0;
+            });
       return {
         ...state,
         pokemons: sortAlpha,
@@ -136,7 +165,6 @@ const rootReducer = (state = initialState, action) => {
               return 0;
             });
       console.log("state.pokemons attack", state.pokemons);
-      console.log("sortedPoke attack", sortedPoke);
       return {
         ...state,
         pokemons: sortedPoke,
@@ -148,43 +176,11 @@ const rootReducer = (state = initialState, action) => {
         pokemons: action.payload,
       };
 
-    case FILTER_BY_TYPE:
-      let type = action.payload;
-      console.log(action.payload);
-      let allPoke = state.allPokemons;
-      let pokemonFiltered = state.pokemons.filter((poke) =>
-        poke.types.includes(type)
-      );
-      let test = action.payload === "all" ? allPoke : pokemonFiltered;
-
-      console.log("filterByType", action.payload);
-      if (pokemonFiltered.length > 0) {
-        return {
-          ...state,
-          pokemons: test,
-        };
-      } else {
-        return {
-          ...state,
-          pokemons: state.allPokemons,
-        };
-      }
-
-    case FILTER_BY_CREATED:
-      let created = state.allPokemons.filter((poke) => poke.createdInDB);
-      let apiPoke = state.allPokemons.filter((poke) => !poke.createdInDB);
-      let createdFilter = action.payload === "Data Base" ? created : apiPoke;
-      return {
-        ...state,
-        pokemons: action.payload === "All" ? state.allPokemons : createdFilter,
-      };
-
     case CLEAN_FILTER:
-      const all = state.pokemons
+      const all = state.pokemons;
       return {
         ...state,
         pokemons: all,
-       
       };
     default:
       return { ...state };

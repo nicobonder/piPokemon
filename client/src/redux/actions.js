@@ -81,16 +81,18 @@ export const updatePokemon = (updatePoke) => {
 
 export const getTypes = () => {
     return async function(dispatch){
-        return fetch('http://localhost:3001/types')
-        .then(res => res.json())
-        .then(pokemons => {
-            let types = [];
-            pokemons.map((pokemon) => types.push(pokemon.types))
-            dispatch ({type: GET_TYPES, payload: types})
-        }
-        )
+        let info = await axios.get('http://localhost:3001/types', {})
+        return dispatch({type: GET_TYPES, payload: info.data})
     }
-};
+}
+
+export const filterByCreated = (value) => {
+    return {type: FILTER_BY_CREATED, payload: value}
+}
+
+export const filterByType = (filter) => {
+    return {type: FILTER_BY_TYPE, payload: filter}
+}
 
 export const sortByAlphabet = (order) => {
     return ({type: SORT_BY_ALPHABET, payload: order});
@@ -98,14 +100,6 @@ export const sortByAlphabet = (order) => {
 
 export const sortByAttack = (order) => {
     return {type: SORT_BY_ATTACK, payload: order}
-}
-
-export const filterByType = (filter) => {
-    return {type: FILTER_BY_TYPE, payload: filter}
-}
-
-export const filterByCreated = (value) => {
-    return {type: FILTER_BY_CREATED, payload: value}
 }
 
 export const cleanFilter = () => {

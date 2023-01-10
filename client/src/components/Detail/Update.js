@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePokemon } from "../../redux/actions";
-import axios from "axios";
+//import axios from "axios";
 import { useHistory } from "react-router-dom";
 import * as actions from "../../redux/actions";
 import s from "./Update.module.css";
@@ -49,10 +49,10 @@ function validate(input){  //va a recibir el estado input con los cambios detect
 
 export default function Update(props) {
   const pokemonDetail = useSelector((state) => state.pokemons.find((pokemon) => pokemon.id === props.match.params.id));
+  const types = useSelector((state) => state.types);
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({e:''}); 
-  
   const [input, setInput] = useState({
     id: props.match.params.id,
     name: pokemonDetail.name,
@@ -66,6 +66,9 @@ export default function Update(props) {
     types: pokemonDetail.types,
     createdInDB: true
   });
+
+  const sortTypes = types.sort((x, y) => x.name.localeCompare(y.name));
+  console.log('sortTypes', sortTypes)
 
   function handleSelect(e) {
     //recibe el tipo que se seleccionó en el selector
@@ -235,25 +238,9 @@ export default function Update(props) {
                   <option value="default" disabled hidden>
                     Pokemon type
                   </option>
-                  <option value="bug">bug</option>
-                  <option value="dark">dark</option>
-                  <option value="dragon">dragon</option>
-                  <option value="electric">electric</option>
-                  <option value="fairy">fairy</option>
-                  <option value="fighting">fighting</option>
-                  <option value="flying">flying</option>
-                  <option value="fire">fire</option>
-                  <option value="ghost">ghost</option>
-                  <option value="grass">grass</option>
-                  <option value="ground">ground</option>
-                  <option value="ice">ice</option>
-                  <option value="poison">poison</option>
-                  <option value="psychic">psychic</option>
-                  <option value="rock">rock</option>
-                  <option value="shadow">shadow</option>
-                  <option value="steel">steel</option>
-                  <option value="unknow">unknow</option>
-                  <option value="water">water</option>
+                  {types.map((type) => (
+                  <option value={type.name}>{type.name[0].toUpperCase() + type.name.slice(1)}</option>
+                 ))}
                 </select>
               ) : (
                 <p className={s.error}>cannot have more than 2 types</p>
