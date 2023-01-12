@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import s from './SearchBar.module.css'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
 
 export default function Search() {
   const [name, setName] = useState("")
   const dispatch = useDispatch();
+  const pokemons = useSelector((state)=> state.allPokemons);
   
   // React.useEffect(() => {
   //   if (!pokemons[0]) {
@@ -21,9 +22,13 @@ export default function Search() {
   }
 
   function handleSearch(e) {
+    const findPoke = pokemons.find((poke) => poke.name === name)
     e.preventDefault();
     if(!name){
       alert('Please, enter some name');
+    }
+    if(!findPoke){
+      alert('That Pokemon doesnt exist')
     }
     dispatch(actions.searchPokemon(name));
     //console.log('name handle search', name)

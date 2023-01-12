@@ -7,7 +7,7 @@ import * as actions from "../../redux/actions";
 
 //FUNCION VALIDADORA
 function validate(input){  //va a recibir el estado input con los cambios detectados por los handlers
-  
+   
   let errors = {};  //objeto que guarda todos los errores y le agrego props con los nombres iguales a los del input
   if(!input.name){                               
       errors.name = 'a name is required';//al obj errors le agrego una prop name q tiene un mensaje como valor
@@ -48,6 +48,7 @@ function validate(input){  //va a recibir el estado input con los cambios detect
 }
 
 export default function Create() {
+  const pokemons = useSelector((state)=> state.allPokemons);
   const types = useSelector((state) => state.types);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -64,6 +65,12 @@ export default function Create() {
     types: [],
     createdInDB: true
   });
+
+  const findPoke = pokemons.find((poke) => poke.name === input.name)
+  if(findPoke){
+    errors.name = 'That Pokemon already exist'
+  }
+ 
 
   const sortTypes = types.sort((x, y) => x.name.localeCompare(y.name));
   console.log('sortTypes', sortTypes)
