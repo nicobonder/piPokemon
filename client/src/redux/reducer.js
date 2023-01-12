@@ -113,7 +113,6 @@ const rootReducer = (state = initialState, action) => {
           pokemons: test,
         };
       } else {
-        console.log('yamil')
         return {
           ...state, //si no hay ningun poke con ese type, muestro todos los poke
           pokemons: state.allPokemons,

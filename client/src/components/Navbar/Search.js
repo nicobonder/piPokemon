@@ -8,13 +8,6 @@ export default function Search() {
   const dispatch = useDispatch();
   const pokemons = useSelector((state)=> state.allPokemons);
   
-  // React.useEffect(() => {
-  //   if (!pokemons[0]) {
-  //     dispatch(actions.getPokemons());
-  //     dispatch(actions.getTypes());
-  //   }
-  // }, [dispatch, pokemons]);
-
   function handleInputChange(e) {
     e.preventDefault();
     setName(e.target.value)
