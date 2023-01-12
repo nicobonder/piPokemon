@@ -7,6 +7,7 @@ import * as actions from "../../redux/actions";
 
 //FUNCION VALIDADORA
 function validate(input){  //va a recibir el estado input con los cambios detectados por los handlers
+  
   let errors = {};  //objeto que guarda todos los errores y le agrego props con los nombres iguales a los del input
   if(!input.name){                               
       errors.name = 'a name is required';//al obj errors le agrego una prop name q tiene un mensaje como valor
@@ -249,7 +250,7 @@ export default function Create() {
                   <div className={s.typeContent}>
                     
                     {/*renderizo el type que ya fue seleccionado con un boton X*/}
-                    <p>{el}</p>
+                    <p className={s.showType}>{el}</p>
                     <button
                       className={s.deleteType}
                       type="button"

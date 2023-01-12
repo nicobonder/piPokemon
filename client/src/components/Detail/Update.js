@@ -253,7 +253,7 @@ export default function Update(props) {
                   <div className={s.typeContent}>
                     
                     {/*renderizo el type que ya fue seleccionado con un boton X*/}
-                    <p>{el}</p>
+                    <p className={s.showType}>{el}</p>
                     <button
                       className={s.deleteType}
                       type="button"

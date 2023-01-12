@@ -79,21 +79,13 @@ const getAllPokemons = async () => {
     return allPokemons
 }
 
-const createPokemon = async (req, res) =>{
+const createPokemon = async (req, res) =>{ //la info para crear llega por body
   const { name, img, attack, defense, speed, hp, height, weight, types, createdInDB } = req.body;
+
+  if (!name || !img || !attack || !defense || !speed || !hp || !height || !weight || !types)
+    return res.status(400).json({error: 'Missing obligatory data'});
   try{
-    let newPokemon = await Pokemon.create({ 
-        //id
-        name, 
-        img,
-        attack, 
-        defense, 
-        speed, 
-        hp, 
-        height, 
-        weight,
-        createdInDB
-    });
+    let newPokemon = await Pokemon.create(req.body);
    // Dentro del modelo Type busco los types que coincidan con los que vienen por body
     let typeDB = await Type.findAll(
         {   
@@ -107,36 +99,11 @@ const createPokemon = async (req, res) =>{
         res.json(newPokemon)
         
   } catch(error){
-        return res.status(500).json({ message: error.message })
+        return res.status(400).json({ message: error.message })
     }
 }
 
-// const updatePokemons = async (req, res) =>{
-//     try {
-//         const { id } = req.params;
-//         const { name, attack, defense, speed, hp, height, weight } = req.body;
-//         //Busco un poke por su id
-//         const pokemon = await Pokemon.findByPk(id);
-//         //lo actualizo con los valores que recibo por body.
-//         pokemon.name = name;
-//         pokemon.attack = attack;
-//         pokemon.defense = defense;
-//         pokemon.speed = speed;
-//         pokemon.hp = hp;
-//         pokemon.height = height;
-//         pokemon.weight = weight;
-//         //lo guardo y lo devuelvo
-//         await pokemon.save();
-//         res.json(pokemon);
-
-//     } catch(error){
-//         return res.status(500).json({ message: error.message })
-//     }
-// }
-
-
 module.exports = {
     getAllPokemons,
-    //updatePokemons,
     createPokemon,
 }

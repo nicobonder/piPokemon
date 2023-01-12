@@ -34,7 +34,7 @@
 
 /*de 640 a 768*/
 @media (min-width: 640px) {
-    .navbarResponsive{
+    .navbarSection{
         height: 4vh;
         width: 100%;
         background: rgb(2,0,36);

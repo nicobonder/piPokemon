@@ -18,6 +18,7 @@ const initialState = {
   allPokemons: [],
   pokemonDetail: {},
   types: [],
+  error: null
   //filterByType: [],
 };
 
@@ -88,19 +89,20 @@ const rootReducer = (state = initialState, action) => {
 
     //SORTS Y FILTERS
     case FILTER_BY_CREATED:
-      let created = state.allPokemons.filter((poke) => poke.createdInDB); //filtro los q tienen la prop createdInDB
-      let apiPoke = state.allPokemons.filter((poke) => !poke.createdInDB); //filtro los q NO tienen la prop createdInDB
+      let allPoke1 = state.allPokemons; //todos los poke
+      let created = state.pokemons.filter((poke) => poke.createdInDB); //filtro los q tienen la prop createdInDB
+      let apiPoke = state.pokemons.filter((poke) => !poke.createdInDB); //filtro los q NO tienen la prop createdInDB
       let createdFilter = action.payload === "Data Base" ? created : apiPoke; //el ternario hace que al aplicar el filtro 
                                                 //si se cumple muestra los creados y si es false muestra los que vienen de la API
       return {
         ...state,                                 //el state pokemons tiene un ternario q si el value es All muestra todos los poke
-        pokemons: action.payload === "All" ? state.allPokemons : createdFilter, //si no, muestra el resultado de createdFilter
+        pokemons: action.payload === "All" ? allPoke1 : createdFilter, //si no, muestra el resultado de createdFilter
       };                                                                        
 
     case FILTER_BY_TYPE:
       let type = action.payload;
       let allPoke = state.allPokemons; //todos los poke
-      let pokemonFiltered = allPoke.filter((poke) =>
+      let pokemonFiltered = state.pokemons.filter((poke) =>
         poke.types.includes(type) //los poke que tengan el type elegido
       ); //si elijo All muestr todos los poke y si no, muestro los q coinciden con el filtro
       let test = action.payload === "all" ? allPoke : pokemonFiltered;
@@ -111,6 +113,7 @@ const rootReducer = (state = initialState, action) => {
           pokemons: test,
         };
       } else {
+        console.log('yamil')
         return {
           ...state, //si no hay ningun poke con ese type, muestro todos los poke
           pokemons: state.allPokemons,

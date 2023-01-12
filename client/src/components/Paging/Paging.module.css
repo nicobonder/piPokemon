@@ -1,47 +1,106 @@
-.navPages{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0.8rem;
+/*menos de 640*/
+@media (max-width: 640px) {
+    .navPages{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0.8rem;
+    }
+    
+    .pageList{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0 0.5rem;
+    }
+    
+    .numberPage{
+        display: none;
+    } 
+    
+    .pageBtn {
+        border-radius: 50%;
+        border: none;
+        height: 1.8rem;
+        width: 1.8rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: black;
+        background-color: rgb(255, 0, 0);
+        margin: 0 0.2rem 0.2rem 0.2rem;
+        transition: all 0.3s;
+    }
+    
+    .pageBtn{
+        border-radius: 0.5rem;
+        width: 3.8rem;
+    }
+    
+    .numberPage:hover, .pageBtn:hover{
+        cursor: pointer;
+        color: white;
+        font-size: 0.9rem;
+    }
+    
+    .numberPage:hover{
+        transform: rotate(360deg);
+    }
+    
+    .pageBtn:disabled{
+        cursor: none;
+        background-color: rgba(255, 0, 0, 0.2);
+    }
 }
 
-.pageList{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin: 0 0.5rem;
-}
 
-.numberPage, .pageBtn {
-    border-radius: 50%;
-    border: none;
-    height: 1.8rem;
-    width: 1.8rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: black;
-    background-color: rgb(255, 0, 0);
-    margin: 0 0.2rem;
-    transition: all 0.3s;
-}
-
-.pageBtn{
-    border-radius: 0.5rem;
-    width: 3.8rem;
-}
-
-.numberPage:hover, .pageBtn:hover{
-    cursor: pointer;
-    color: white;
-    font-size: 0.9rem;
-}
-
-.numberPage:hover{
-    transform: rotate(360deg);
-}
-
-.pageBtn:disabled{
-    cursor: none;
-    background-color: rgba(255, 0, 0, 0.2);
+/*mas de 640*/
+@media (min-width: 640px) {
+    .navPages{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0.8rem;
+    }
+    
+    .pageList{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0 0.5rem;
+    }
+    
+    .numberPage, .pageBtn {
+        border-radius: 50%;
+        border: none;
+        height: 1.8rem;
+        width: 1.8rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: black;
+        background-color: rgb(255, 0, 0);
+        margin: 0 0.2rem;
+        transition: all 0.3s;
+    }
+    
+    .pageBtn{
+        border-radius: 0.5rem;
+        width: 3.8rem;
+    }
+    
+    .numberPage:hover, .pageBtn:hover{
+        cursor: pointer;
+        color: white;
+        font-size: 0.9rem;
+    }
+    
+    .numberPage:hover{
+        transform: rotate(360deg);
+    }
+    
+    .pageBtn:disabled{
+        cursor: none;
+        background-color: rgba(255, 0, 0, 0.2);
+    }
 }

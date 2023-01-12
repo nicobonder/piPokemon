@@ -101,3 +101,7 @@ input {
     font-size: 0.7rem;
     font-weight: 600;
 }
+
+.showType{
+    margin: 0 0.3rem
+}

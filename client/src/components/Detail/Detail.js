@@ -10,7 +10,6 @@ export default function Detail(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const pokemonDetail = useSelector((state) => state.pokemonDetail);
-   //console.log('typeof pokemonDetail.types', typeof pokemonDetail.types)  
 
   useEffect(() => {
     dispatch(actions.getPokemonDetail(props.match.params.id));

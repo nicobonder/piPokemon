@@ -27,7 +27,7 @@ export const getPokemons = () => {
 };
 
 export const getPokemonDetail = (id) => {
-    return function(dispatch) {
+    return async function(dispatch) {
         return fetch(`http://localhost:3001/pokemons/${id}`)    
         .then(res => res.json())
         .then(data => dispatch(

@@ -38,7 +38,9 @@ router.get('/:id', async (req, res) =>{
 
     if(id){ //si me pasaron un id valido, filtro y devuelvo
         let pokeName = pokeById.filter(poke => poke.id == id)
-        pokeName.length ? res.status(200).json(pokeName) : res.status(404).send('Sorry, we couldnt find that pokemon.');  //si el id no es valido devuelvo mensaje.
+        pokeName.length 
+        ? res.status(200).json(pokeName) 
+        : res.status(404).send('Sorry, we couldnt find that pokemon.');  //si el id no es valido devuelvo mensaje.
         }
 });
 
