@@ -43,7 +43,7 @@ export default function Filters({ setCurrentPage }) {
     const value = e.target.value;
     setSelectValue(value); //para mostrarle a usuario lo que eligio
     dispatch(actions.filterByType(value)); //disapara la action del reducer
-    history.push("/pokemons");
+    //history.push("/pokemons");
     setCurrentPage(1);
   }
 
