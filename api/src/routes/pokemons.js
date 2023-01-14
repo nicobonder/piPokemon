@@ -6,7 +6,7 @@ const { Pokemon, Type } = require("../db");
 const { 
     getAllPokemons,
     createPokemon, 
-    updatePokemons,     
+    //updatePokemons,     
 } = require('../controllers/pokemons.controller.js');
 
 //const router = require("express").Router();
@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) =>{
     if(id){ //si me pasaron un id valido, filtro y devuelvo
         let pokeName = pokeById.filter(poke => poke.id == id)
         pokeName.length 
-        ? res.status(200).json(pokeName) 
+        ? res.status(200).json(pokeName) //si al filtrar hay una coincidencia, muestro el poke.
         : res.status(404).send('Sorry, we couldnt find that pokemon.');  //si el id no es valido devuelvo mensaje.
         }
 });
@@ -50,10 +50,10 @@ router.post('/', (createPokemon));
 router.put('/:id', (req, res) => {
     const pokeId = req.params.id;
     const updates = req.body;
-    Pokemon.update(updates, 
+    Pokemon.update(updates, //update es un metodo de sequelize para actualizar 
         { where: { id: pokeId } })
     .then(() => {
-        res.sendStatus({message: 'Pokemon updated.'});
+        res.sendStatus(200);
     }) // Envio un codigo de estado de exito sin contenido
     .catch((error) => {
       console.error(error);

@@ -13,22 +13,15 @@ export default function Detail(props) {
 
   useEffect(() => {
     dispatch(actions.getPokemonDetail(props.match.params.id));
+    return ()=>{
+      dispatch(actions.cleanPokemon())
+  }
   }, [dispatch, props.match.params.id]);
 
   function handleDeletePokemon(){
     dispatch(actions.deletePokemon(props.match.params.id))
     history.push("/pokemons");
   }  
-
-  // function handleUpdatePokemon(){
-  //   dispatch(actions.updatePokemon(props.match.params.id))
-  //   history.push("/pokemons");
-  // }  
-
-  // function handleUpdate(e){
-  //   dispatch(actions.upd)  
-  // }
-
 
   return (
     <div className={s.detailSection}>

@@ -8,11 +8,11 @@ import * as actions from "../../redux/actions";
 //FUNCION VALIDADORA
 function validate(input){  //va a recibir el estado input con los cambios detectados por los handlers
    
-  let errors = {};  //objeto que guarda todos los errores y le agrego props con los nombres iguales a los del input
-  if(!input.name){                               
-      errors.name = 'a name is required';//al obj errors le agrego una prop name q tiene un mensaje como valor
-  }else if(!/^[A-z]+$/.test(input.name)){  //regex solo acepta letras
-      errors.name = 'only letters allowed'
+    let errors = {};  //objeto que guarda todos los errores y le agrego props con los nombres iguales a los del input
+    if(!input.name){                               
+        errors.name = 'a name is required';//al obj errors le agrego una prop name q tiene un mensaje como valor
+    }else if(!/^[A-z]+$/.test(input.name)){  //regex solo acepta letras
+        errors.name = 'only letters allowed'
   }else if(!input.img){
       errors.img = 'insert an url';
   }else if(!/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(input.img)){ 
@@ -66,7 +66,7 @@ export default function Create() {
     createdInDB: true
   });
 
-  const findPoke = pokemons.find((poke) => poke.name === input.name)
+  const findPoke = pokemons.find((poke) => poke.name.toLowerCase() === input.name.toLowerCase())
   if(findPoke){
     errors.name = 'That Pokemon already exist'
   }

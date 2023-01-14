@@ -11,7 +11,7 @@ let cacheTypes; //aranca con valores null
 router.get('/', async (req, res) => {
     
     try{
-        if(!cacheTypes) {
+        if(!cacheTypes) { //bulkCreate es un metodo de sequelize para crear un conjunto de instancias cdo hay relacion de muchos a muchos
             await Type.bulkCreate((await axios.get('https://pokeapi.co/api/v2/type')).data.results.map(({name}) => ({name}))
             )   //el objeto tiene mucha info, necesto solo dataValues
         cacheTypes = (await Type.findAll()).map(el => el.dataValues);

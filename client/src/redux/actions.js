@@ -6,6 +6,7 @@ export const CREATE_POKEMON = "CREATE_POKEMON";
 export const DELETE_POKEMON = "DELETE_POKEMON";
 export const UPDATE_POKEMON = "UPDATE_POKEMON";
 export const GET_TYPES = "GET_TYPES";
+export const CLEAN_POKEMON = "CLEAN_POKEMON";
 
 //Filtos y ordenamiento
 export const FILTER_BY_TYPE = "FILTER_BY_TYPE";
@@ -55,27 +56,24 @@ export const createPokemon = (pokemon) => {
         const newPokemon = await axios.post(`http://localhost:3001/pokemons/`, pokemon)
        dispatch({type: CREATE_POKEMON, payload: newPokemon})
     }
-    //return { type: CREATE_POKEMON, payload: pokemon}
 };
+
+export const updatePokemon = (updatePoke) => {
+    return async function(dispatch){ //va la ruta del poke que tiene que actualizar
+        await axios.put(`http://localhost:3001/pokemons/${updatePoke.id}`, updatePoke)
+        .then((res) => { 
+            dispatch({type: UPDATE_POKEMON, payload: res.data}) //res.data da OK
+        })
+        .catch((err) =>{
+            console.log(err)
+        });
+    }
+}
 
 export const deletePokemon = (pokemonId) => {
     return async function(dispatch){
         const deletePoke = await axios.delete(`http://localhost:3001/pokemons/${pokemonId}`, pokemonId )
         dispatch({type: DELETE_POKEMON, payload: deletePoke})
-    }
-}
-
-export const updatePokemon = (updatePoke) => {
-    console.log('updatePokemon en actions')
-    return async function(dispatch){
-        await axios.put(`http://localhost:3001/pokemons/${updatePoke.id}`, updatePoke)
-        .then((res) => {
-            dispatch({type: UPDATE_POKEMON, payload: res.data})
-            console.log('res.data en actions', res.data)
-        })
-        .catch((err) =>{
-            console.log(err)
-        });
     }
 }
 
@@ -86,7 +84,7 @@ export const getTypes = () => {
     }
 }
 
-export const filterByCreated = (value) => {
+export const filterByCreated = (value) => { //el payload va a ser aí, db o all. Depende de lo q eleija el usuario
     return {type: FILTER_BY_CREATED, payload: value}
 }
 
@@ -104,4 +102,8 @@ export const sortByAttack = (order) => {
 
 export const cleanFilter = () => {
     return {type: CLEAN_FILTER}
+}
+
+export const cleanPokemon = () => {
+    return { type: CLEAN_POKEMON, payload: {}}
 }

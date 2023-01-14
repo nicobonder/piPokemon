@@ -16,7 +16,7 @@ export default function Filters({ setCurrentPage }) {
   const pokemons = useSelector((state) => state.pokemons);
   const types = useSelector((state) => state.types);
   const sortTypes = types.sort((x, y) => x.name.localeCompare(y.name));
-  console.log("sortTypes en filters", sortTypes);
+  //console.log("sortTypes en filters", sortTypes);
 
   React.useEffect(() => {
     if (!pokemons[0]) {
@@ -94,7 +94,7 @@ export default function Filters({ setCurrentPage }) {
               </option>
               <option value="All">All</option>
               {types.map((type) => (
-                <option value={type.name}>
+                <option value={type.name} key={type.name}>
                   {type.name[0].toUpperCase() + type.name.slice(1)}
                 </option>
               ))}

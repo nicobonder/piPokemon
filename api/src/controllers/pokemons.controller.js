@@ -1,9 +1,11 @@
 const axios = require('axios');
 const { Pokemon, Type } = require("../db"); 
 
+
+
 //Obtengo info de url para tener la info de la API
+//Aca voy a poner toda la info de todos los poke con el forEach
 const getApiInfo = async () => {
-    //Aca voy a poner toda la info de todos los poke con el forEach
     let pokemonsApi = [];
 
     //Traigo name y url de los primeros 40 poke
@@ -35,9 +37,9 @@ const getApiInfo = async () => {
     return await apiInfo   
 }
 
-//VER SI HACE FALTA USAR attributes
-const getDBInfo = async () => {
-    const infoDB = await Pokemon.findAll({include: 'types'});
+//Traigo los pokes creados en la DB
+const getDBInfo = async () => { 
+    const infoDB = await Pokemon.findAll({include: 'types'}); //include es p/ hacer Eager Loading y traer los 2 modelos juntos
     console.log('infodb')
     const newInfo = infoDB.map((poke) => {
         const obj = 
@@ -55,9 +57,6 @@ const getDBInfo = async () => {
             types: poke.dataValues.types.map((t) => t.dataValues.name)
         }
 
-        const lostypes = poke.dataValues.types.map((t) => t.dataValues.name)
-        console.log('map de types', lostypes)
-        console.log('el type de db', poke.dataValues.types)
     return obj
     });
 
@@ -65,7 +64,6 @@ const getDBInfo = async () => {
 
     return newInfo
 
-    //{id: el.dataValues.id, name: el.dataValues.name})
 }
 
 const getAllPokemons = async () => {
@@ -107,3 +105,4 @@ module.exports = {
     getAllPokemons,
     createPokemon,
 }
+

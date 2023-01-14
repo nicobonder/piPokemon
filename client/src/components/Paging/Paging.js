@@ -15,7 +15,7 @@ export default function Paging({pokemonsPerPage, pokemons, paging, nextHandler, 
             <ul className={s.pageList}>
                 {pageNumbers && //si pageNumbers existe, la mapeo y renderizo una lista de botones con los nros de pagina
                         pageNumbers.map(number => (
-                            <button className={s.numberPage} key={number} onClick={() => paging(number)}>{number}</button>
+                            <button className={currentPage===number ? s.match : s.numberPage} key={number} onClick={() => paging(number)}>{number}</button>
                         ))}
             </ul>
             <button disabled={currentPage === pageNumbers[pageNumbers.length-1]} className={s.pageBtn} onClick={() => nextHandler()}>Next <i className="fa-solid fa-caret-right"></i></button>
