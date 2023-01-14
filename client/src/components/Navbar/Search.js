@@ -15,16 +15,18 @@ export default function Search() {
   }
 
   function handleSearch(e) {
-    const findPoke = pokemons.find((poke) => poke.name === name)
     e.preventDefault();
+    console.log('pokemons en search', pokemons)
+    let findPoke = pokemons.find((poke) => poke.name.toLowerCase() === name.toLowerCase())
+    console.log('findPoke en search', findPoke)
     if(!name){
       alert('Please, enter some name');
     }
-    if(!findPoke){
+    if(findPoke){
+      dispatch(actions.searchPokemon(name));
+    } else if(!findPoke){
       alert('That Pokemon doesnt exist')
     }
-    dispatch(actions.searchPokemon(name));
-    //console.log('name handle search', name)
     setName(''); //vacio el input
   }
 
