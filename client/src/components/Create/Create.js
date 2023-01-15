@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import s from "./Create.module.css";
 import { useHistory } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions";
 
 //FUNCION VALIDADORA
 function validate(input){  //va a recibir el estado input con los cambios detectados por los handlers
-   
     let errors = {};  //objeto que guarda todos los errores y le agrego props con los nombres iguales a los del input
-    if(!input.name){                               
+    if(!input.name){  //si imput no tiene una prop name                             
         errors.name = 'a name is required';//al obj errors le agrego una prop name q tiene un mensaje como valor
     }else if(!/^[A-z]+$/.test(input.name)){  //regex solo acepta letras
         errors.name = 'only letters allowed'
@@ -17,10 +15,10 @@ function validate(input){  //va a recibir el estado input con los cambios detect
       errors.img = 'insert an url';
   }else if(!/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(input.img)){ 
       errors.img = 'only URL directions allowed'
-  }else if(input.hp < 1 || input.hp > 200){
+  }else if(input.hp < 1 || input.hp > 200){ //en los numericos reviso que esten entre esos valores
       errors.hp = 'must be a value between 1 and 200'
   }else if(!/^[0-9]+$/.test(input.hp)){ 
-      errors.hp = 'only numbers allowed'
+      errors.hp = 'only numbers allowed' //y que solo acepte numeros
   }else if(input.attack < 1 || input.attack > 200){
       errors.attack = 'must be a value between 1 and 200'
   }else if(!/^[0-9]+$/.test(input.attack)){ 
@@ -41,10 +39,10 @@ function validate(input){  //va a recibir el estado input con los cambios detect
       errors.weight = 'must be a value between 1 and 200'
   }else if(!/^[0-9]+$/.test(input.weight)){ 
       errors.weight = 'only numbers allowed'
-  }else if(input.types.length < 1){
+  }else if(input.types.length < 1){ //tiene que haber al menos un type
       errors.types = 'select at least 1 type'
   }
-      return errors;      //se retorna el obj errors con la prop y el string correspondiente. let errors = {name: 'se requiere un nombre'}
+      return errors;  //se retorna el obj errors con la prop y el string correspondiente. ej: let errors ={name: 'a name is required'}
 }
 
 export default function Create() {
@@ -66,12 +64,13 @@ export default function Create() {
     createdInDB: true
   });
 
+  //para crear este error, primero necesitaba una func que busque el name. Asi no se puede crear un poke con un name = a uno existente
   const findPoke = pokemons.find((poke) => poke.name.toLowerCase() === input.name.toLowerCase())
   if(findPoke){
     errors.name = 'That Pokemon already exist'
   }
  
-
+  //Ordeno los types p/ que aparezcan ordenados en las opciones
   const sortTypes = types.sort((x, y) => x.name.localeCompare(y.name));
   console.log('sortTypes', sortTypes)
 
@@ -86,8 +85,8 @@ export default function Create() {
     }))
   };
 
-  function handleSelect(e) {
-    //recibe el tipo que se seleccionó en el selector
+  function handleSelect(e) { //para los types necesito una func aparte
+    //recibe el type que se seleccionó en el selector
     if (!input.types.includes(e.target.value)) {
       //evita que se repitan los tipos
       setInput({
@@ -105,8 +104,7 @@ export default function Create() {
     e.preventDefault();
     dispatch(actions.createPokemon(input));
     console.log("form submited");
-    setInput({
-      //resetea el estado del input
+    setInput({//resetea el estado del input
       name: "",
       attack: 0,
       defense: 0,
@@ -121,8 +119,7 @@ export default function Create() {
     history.push("/pokemons"); //despues redirige para ver todos los poke
   };
 
-  function handleDelete(el) {
-    //recibe un evento, que es el click en la X de un tipo
+  function handleDelete(el) { //la X activa un evento para borrar el type
     setInput({
       ...input,
       types: input.types.filter((t) => t !== el), //se filtra el array de la prop type, dejando pasar solo aquellos tipos que no coinciden con el clickeado
@@ -148,7 +145,7 @@ export default function Create() {
                 value={input.name}
                 onChange={(e) => handleChange(e)}
               />
-               {errors.name && <p className={s.error}>{errors.name}</p>}    {/*si el estado errors tiene la prop name, renderizo un parrafo con el string de ésta prop */}
+               {errors.name && <p className={s.error}>{errors.name}</p>} {/*si el estado errors tiene la prop name, renderizo un parrafo con el string de esta prop */}
             </div>
             <div className={s.input}>
               <label htmlFor="attack">Attack: </label>
@@ -235,37 +232,32 @@ export default function Create() {
             </div>
 
             <div className={s.typeForm}>
-              {input.types.length < 2 ? ( //si ya eligio 2, no se muestran las opciones
+              {input.types.length < 2 ? ( //si hay menos de 2 types elegidos
                 <select value="default" onChange={(e) => handleSelect(e)}>
-                  
-                  {/*Cuando se selecciona una opcion se ejecuta handleSelect con esa selección*/}
+                  {/*Cuando se selecciona una opcion se ejecuta handleSelect con esa seleccion*/}
                   <option value="default" disabled hidden>
                     Pokemon type
                   </option>
-                  {types.map((type) => (
+                  {types.map((type) => ( //mapeo todos los types
                   <option value={type.name}>{type.name[0].toUpperCase() + type.name.slice(1)}</option>
                  ))}
                 </select>
-              ) : (
+              ) : ( //si ya eligio 2, no se muestran las opciones
                 <p className={s.error}>cannot have more than 2 types</p>
               )}
             </div>
             {errors.types && <p className={s.error}>{errors.types}</p>}
-                {/*Se va a mostrar cada type seleccionado*/}
             <div className={s.input}>
-              {input.types.map((el) => ( //Recorro el array de la prop type del input
+              {input.types.map((el) => ( //Recorro el array de la prop type del input. O sea, los elegidos
                   <div className={s.typeContent}>
-                    
-                    {/*renderizo el type que ya fue seleccionado con un boton X*/}
-                    <p className={s.showType}>{el}</p>
+                    <p className={s.showType}>{el}</p> {/*y los muestro junto con un boton X*/}
                     <button
                       className={s.deleteType}
                       type="button"
                       onClick={() => handleDelete(el)}
                     >
-                      x
+                      x {/*cuando clickeo en X se ejecuta handleDelete*/}
                     </button>
-                    {/*cuando clickeo en X se ejecuta handleDelete*/}
                   </div>
                 )
               )}
@@ -281,39 +273,3 @@ export default function Create() {
     </div>
   );
 }
-
-/*
-
-            <div className={s.typeForm}>
-              {input.types.length < 2 ? ( //si ya eligio 2, no se muestran las opciones
-                <select value="default" onChange={(e) => handleSelect(e)}>
-                  
-                  {/*Cuando se selecciona una opcion se ejecuta handleSelect con esa selección*/
-            //       <option value="default" disabled hidden>
-            //         Pokemon type
-            //       </option>
-            //       <option value="bug">bug</option>
-            //       <option value="dark">dark</option>
-            //       <option value="dragon">dragon</option>
-            //       <option value="electric">electric</option>
-            //       <option value="fairy">fairy</option>
-            //       <option value="fighting">fighting</option>
-            //       <option value="flying">flying</option>
-            //       <option value="fire">fire</option>
-            //       <option value="ghost">ghost</option>
-            //       <option value="grass">grass</option>
-            //       <option value="ground">ground</option>
-            //       <option value="ice">ice</option>
-            //       <option value="poison">poison</option>
-            //       <option value="psychic">psychic</option>
-            //       <option value="rock">rock</option>
-            //       <option value="shadow">shadow</option>
-            //       <option value="steel">steel</option>
-            //       <option value="unknow">unknow</option>
-            //       <option value="water">water</option>
-            //     </select>
-            //   ) : (
-            //     <p className={s.error}>cannot have more than 2 types</p>
-            //   )}
-            // </div>
-            // {errors.types && <p className={s.error}>{errors.types}</p>}

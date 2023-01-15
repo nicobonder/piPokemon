@@ -1,24 +1,22 @@
 import React, { useEffect } from "react";
-import s from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
-//import axios from "axios";
-
 import * as actions from "../../redux/actions";
 import { Link, useHistory } from "react-router-dom";
+import s from "./Detail.module.css";
 
 export default function Detail(props) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const pokemonDetail = useSelector((state) => state.pokemonDetail);
+  const pokemonDetail = useSelector((state) => state.pokemonDetail); //estado global
 
   useEffect(() => {
-    dispatch(actions.getPokemonDetail(props.match.params.id));
+    dispatch(actions.getPokemonDetail(props.match.params.id)); //al cargar dispara el estado de pokemonDetial para el poke q tiene el id de params
     return ()=>{
-      dispatch(actions.cleanPokemon())
+      dispatch(actions.cleanPokemon()) //al desmontar la pagina se limpia el detalle para que no aparezca cdo cargo uno nuevo
   }
   }, [dispatch, props.match.params.id]);
 
-  function handleDeletePokemon(){
+  function handleDeletePokemon(){ //func para borrar el pokemon
     dispatch(actions.deletePokemon(props.match.params.id))
     history.push("/pokemons");
   }  
@@ -33,8 +31,8 @@ export default function Detail(props) {
         <div>
           <img
             className={s.detailImg}
-            src={pokemonDetail.img}
-            alt={`pokemon ${props.match.params.id.slice(0, 4)}`}
+            src={pokemonDetail.img} //Las props del obj las tomo de pokemonDetail
+            alt={`pokemon ${props.match.params.id.slice(0, 4)}`} //como tengo id de los creados, corto p/ q no sean tan largos
           />
         </div>
         <div>
@@ -65,16 +63,16 @@ export default function Detail(props) {
          
           <div className={s.infoDiv}>
             <h3 className={s.detailSubTitle}>Type</h3>
-              {pokemonDetail.types?.map((t) => (
-                <p className={s.infoDetail}>{t + ","}</p>
+              {pokemonDetail.types?.map((t, index) => (
+                <p className={s.infoDetail} key={index}>{t + ","}</p>
               ))}
           </div>
             
         </div>
         <div className={s.btnDiv}>
-          {!pokemonDetail.createdInDB ?
+          {!pokemonDetail.createdInDB ? //si poke no tiene la prop createdInDB no aparece el btn
           <button className={s.btnNot} type='submit' disabled >Update</button> :
-          <Link className={s.btnDetail} to={`/pokemons/${props.match.params.id}/edit`}>Update</Link>
+          <Link className={s.btnDetail} to={`/pokemons/${props.match.params.id}/edit`}>Update</Link> //el btn lleva al form de update
         }
            {!pokemonDetail.createdInDB ?
           <button className={s.btnNot} disabled >Delete</button> :
@@ -85,5 +83,3 @@ export default function Detail(props) {
     </div>
   );
 }
-
-/*<button className={s.btnDetail} onClick={props.toggleEdit}>Update</button>*/

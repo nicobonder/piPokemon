@@ -6,17 +6,16 @@ import * as actions from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 
 export default function Filters({ setCurrentPage }) {
-  const [selectValue, setSelectValue] = React.useState("");
+  const [selectValue, setSelectValue] = React.useState(""); //uso estos estados locales para mostrar al usuario los filtros q eligio
   const [selectValueB, setSelectValueB] = React.useState("");
   const [orden, setOrden] = useState("");
   const [ordenB, setOrdenB] = useState("");
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const pokemons = useSelector((state) => state.pokemons);
+  const pokemons = useSelector((state) => state.pokemons); //traigo los estados globales
   const types = useSelector((state) => state.types);
-  const sortTypes = types.sort((x, y) => x.name.localeCompare(y.name));
-  //console.log("sortTypes en filters", sortTypes);
+  const sortTypes = types.sort((x, y) => x.name.localeCompare(y.name)); //ordeno types
 
   React.useEffect(() => {
     if (!pokemons[0]) {
@@ -25,17 +24,15 @@ export default function Filters({ setCurrentPage }) {
     }
   }, [dispatch, pokemons]);
 
-  function handleClick(e) {
+  function handleClick(e) { //reseta filters y va a page 1. Tb funciona para el search
     e.preventDefault();
-    //const value = e.target.value;
     console.log("resetear filtros");
     dispatch(actions.getPokemons());
     setCurrentPage(1);
-    setSelectValue("");
+    setSelectValue(""); //blanquea los estados locales
     setSelectValueB("");
     setOrden("");
     setOrdenB("");
-    //history.push('/pokemons')
   }
 
   function handleFilterType(e) {
@@ -51,7 +48,6 @@ export default function Filters({ setCurrentPage }) {
     e.preventDefault();
     const value = e.target.value;
     setSelectValueB(value);
-    console.log("filtrar por creado");
     dispatch(actions.filterByCreated(value));
     setCurrentPage(1);
   }
@@ -60,8 +56,7 @@ export default function Filters({ setCurrentPage }) {
     e.preventDefault();
     const value = e.target.value;
     dispatch(actions.sortByAlphabet(value));
-    setOrden(`Ordered from ${value}`);
-    console.log("ordenado por alfabeto");
+    setOrden(`Sorted by ${value}`);
     history.push("/pokemons");
     setCurrentPage(1);
   }
@@ -70,8 +65,7 @@ export default function Filters({ setCurrentPage }) {
     e.preventDefault();
     const value = e.target.value;
     dispatch(actions.sortByAttack(value));
-    setOrdenB(`Ordered from ${value}`);
-    console.log("ordenado por attack");
+    setOrdenB(`Sorted by ${value}`);
     history.push("/pokemons");
     setCurrentPage(1);
   }
@@ -81,9 +75,10 @@ export default function Filters({ setCurrentPage }) {
       <div className={s.filterSection}>
         <div className={s.filters}>
           <h2 className={s.filterTitle}>Filters</h2>
-          <div className={s.filterBy}>
+         
+          {/***FILTERS***/}
+          <div className={s.filterBy}> 
             <h3 className={s.filterSubitle}>Filter by type</h3>
-
             <select
               className={s.select}
               value="default"
@@ -101,7 +96,7 @@ export default function Filters({ setCurrentPage }) {
             </select>
             {selectValue && <h3 className={s.showFilter}>{selectValue}</h3>}
           </div>
-
+         
           <div className={s.filterBy}>
             <h3 className={s.filterSubitle}>Created in</h3>
             <select
@@ -120,6 +115,7 @@ export default function Filters({ setCurrentPage }) {
           </div>
         </div>
 
+        {/***SORTS***/}
         <div className={s.filters}>
           <div className={s.filterBy}>
             <h3 className={s.filterSubitle}>Sort by Alphabet</h3>
@@ -154,9 +150,11 @@ export default function Filters({ setCurrentPage }) {
           </div>
         </div>
       </div>
+      
       <button className={s.filterBtn} onClick={(e) => handleClick(e)}>
         Reset filters
       </button>
+    
     </div>
   );
 }

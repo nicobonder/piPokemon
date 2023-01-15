@@ -22,8 +22,8 @@
     .pageBtn {
         border-radius: 50%;
         border: none;
-        height: 1.8rem;
-        width: 1.8rem;
+        height: 1.5rem;
+        width: 1.5rem;
         font-size: 0.8rem;
         font-weight: 600;
         color: black;
@@ -39,7 +39,7 @@
     
     .numberPage:hover, .pageBtn:hover{
         cursor: pointer;
-        color: white;
+        color: yellow;
         font-size: 0.9rem;
     }
     
@@ -50,6 +50,26 @@
     .pageBtn:disabled{
         cursor: none;
         background-color: rgba(255, 0, 0, 0.2);
+    }
+
+    .match{
+        border-radius: 50%;
+        border: none;
+        height: 1.5rem;
+        width: 1.5rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: white;
+        background-color: rgb(255, 0, 0);
+        margin: 0 0.2rem;
+        transition: all 0.3s;
+    }
+
+    .match:hover{
+        cursor: pointer;
+        color: black;
+        font-size: 0.9rem;
+        transform: rotate(360deg);
     }
 }
 
@@ -111,7 +131,7 @@
     
     .numberPage:hover, .pageBtn:hover{
         cursor: pointer;
-        color: white;
+        color: yellow;
         font-size: 0.9rem;
     }
     

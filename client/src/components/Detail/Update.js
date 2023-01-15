@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePokemon } from "../../redux/actions";
-//import axios from "axios";
 import { useHistory } from "react-router-dom";
 import * as actions from "../../redux/actions";
 import s from "./Update.module.css";
@@ -44,7 +43,7 @@ function validate(input){  //va a recibir el estado input con los cambios detect
   }else if(input.types.length < 1){
       errors.types = 'select at least 1 type'
   }
-      return errors;      //se retorna el obj errors con la prop y el string correspondiente. let errors = {name: 'se requiere un nombre'}
+      return errors; //retorna el obj errors con la prop y el string correspondiente.
 }
 
 export default function Update(props) {
@@ -71,8 +70,7 @@ export default function Update(props) {
   console.log('sortTypes', sortTypes)
 
   function handleSelect(e) {
-    //recibe el tipo que se seleccionó en el selector
-    if (!input.types.includes(e.target.value)) {
+    if (!input.types.includes(e.target.value)) { //recibe el tipo que se seleccionó en el selector
       //evita que se repitan los tipos
       setInput({
         ...input,
@@ -84,8 +82,6 @@ export default function Update(props) {
             types: [...input.types, e.target.value]
     }))
   }
-    // Llamo a la accion
-    // Envía una solicitud PATCH al servidor para actualizar el elemento
     
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -118,11 +114,10 @@ export default function Update(props) {
     }))
   };
 
-  function handleDelete(el) {
-    //recibe un evento, que es el click en la X de un tipo
+  function handleDelete(el) { //para borrar el type con la x
     setInput({
       ...input,
-      types: input.types.filter((t) => t !== el), //se filtra el array de la prop type, dejando pasar solo aquellos tipos que no coinciden con el clickeado
+      types: input.types.filter((t) => t !== el), //filtra el array de la prop type, dejando pasar solo aquellos tipos que no coinciden con el clickeado
     });
   }
 
@@ -144,7 +139,7 @@ export default function Update(props) {
                 value={input.name}
                 onChange={(e) => handleChange(e)}
               />
-               {errors.name && <p className={s.error}>{errors.name}</p>}    {/*si el estado errors tiene la prop name, renderizo un parrafo con el string de ésta prop */}
+               {errors.name && <p className={s.error}>{errors.name}</p>} {/*si el estado errors tiene la prop name, renderizo un parrafo con el string de esta prop */}
             </div>
             <div className={s.input}>
               <label htmlFor="attack">Attack: </label>
@@ -231,10 +226,8 @@ export default function Update(props) {
             </div>
 
             <div className={s.typeForm}>
-              {input.types.length < 2 ? ( //si ya eligio 2, no se muestran las opciones
+              {input.types.length < 2 ? ( 
                 <select value="default" onChange={(e) => handleSelect(e)}>
-                  
-                  {/*Cuando se selecciona una opcion se ejecuta handleSelect con esa selección*/}
                   <option value="default" disabled hidden>
                     Pokemon type
                   </option>
@@ -242,26 +235,23 @@ export default function Update(props) {
                   <option value={type.name}>{type.name[0].toUpperCase() + type.name.slice(1)}</option>
                  ))}
                 </select>
-              ) : (
+              ) : ( //si ya eligio 2, no se muestran las opciones
                 <p className={s.error}>cannot have more than 2 types</p>
               )}
             </div>
             {errors.types && <p className={s.error}>{errors.types}</p>}
-                {/*Se va a mostrar cada type seleccionado*/}
+               
             <div className={s.input}>
               {input.types.map((el) => ( //Recorro el array de la prop type del input
                   <div className={s.typeContent}>
-                    
-                    {/*renderizo el type que ya fue seleccionado con un boton X*/}
-                    <p className={s.showType}>{el}</p>
+                    <p className={s.showType}>{el}</p>  {/*Se va a mostrar cada type seleccionado con un boton con una x*/}
                     <button
                       className={s.deleteType}
                       type="button"
                       onClick={() => handleDelete(el)}
                     >
-                      x
+                      x  {/*cuando clickeo en X se ejecuta handleDelete*/}
                     </button>
-                    {/*cuando clickeo en X se ejecuta handleDelete*/}
                   </div>
                 )
               )}
@@ -276,14 +266,3 @@ export default function Update(props) {
     </div>
   );
 }
-
-/*  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .patch(`http://localhost:3001/pokemons/${pokemonDetail.id}`, { input })
-      .then(() => {
-        dispatch(updatePokemon(props.match.params.id, input));
-      });
-    history.push(`/pokemons/${props.match.params.id}`); //despues redirige para ver el poke
-    console.log('submit update')
-  };*/
