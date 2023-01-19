@@ -239,7 +239,7 @@ export default function Create() {
                     Pokemon type
                   </option>
                   {types.map((type) => ( //mapeo todos los types
-                  <option value={type.name}>{type.name[0].toUpperCase() + type.name.slice(1)}</option>
+                  <option value={type.name} key={type.name}>{type.name[0].toUpperCase() + type.name.slice(1)}</option>
                  ))}
                 </select>
               ) : ( //si ya eligio 2, no se muestran las opciones
@@ -248,8 +248,8 @@ export default function Create() {
             </div>
             {errors.types && <p className={s.error}>{errors.types}</p>}
             <div className={s.input}>
-              {input.types.map((el) => ( //Recorro el array de la prop type del input. O sea, los elegidos
-                  <div className={s.typeContent}>
+              {input.types.map((el, index) => ( //Recorro el array de la prop type del input. O sea, los elegidos
+                  <div className={s.typeContent} key={index}>
                     <p className={s.showType}>{el}</p> {/*y los muestro junto con un boton X*/}
                     <button
                       className={s.deleteType}

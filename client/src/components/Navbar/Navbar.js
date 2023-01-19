@@ -4,8 +4,10 @@ import { NavLink, Link } from "react-router-dom";
 import logo from './pokeLogo.png'
 import Search from './Search';
 import s from './Navbar.module.css'
+import * as actions from "../../redux/actions";
 
 export default function Navbar() {
+
   return (
     <div className={s.navbarSection}>
       <Link className={s.logo} to='/'><img className={s.logo} src={logo} alt="logo Pokemon" /></Link>

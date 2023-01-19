@@ -75,7 +75,7 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case UPDATE_POKEMON:
-      //busco dentro de pokemons el idenx q tiene el poke que quiero actualizar
+      //busco dentro de pokemons el index q tiene el poke que quiero actualizar
       const index = state.pokemons.findIndex(
         (poke) => poke.id === action.payload.id
       );
@@ -96,7 +96,7 @@ const rootReducer = (state = initialState, action) => {
 
     case FILTER_BY_CREATED:
       let resultCreated = [];
-      console.log("filtertypes 1", state.filterTypes); //da all
+      console.log("filtertypes ", state.filterTypes); //da all
       switch (action.payload) //payload es API, Data Base o All
        {
         case "API":
@@ -112,7 +112,7 @@ const rootReducer = (state = initialState, action) => {
             filterApi.forEach((poke) => { //esta parte es para q tb tenga en cuenta el filtrado por type
               if (
                 !poke.hasOwnProperty("createdInDB") &&
-                poke.types.indexOf(state.filterTypes) >= 0 //quiere decir q el poke tb esta dentro del tilterTypes
+                poke.types.indexOf(state.filterTypes) >= 0 //verifico si el array poke.types contiene el elemento state.filterTypes
               ) {
                 resultCreated.push(poke);
               }
@@ -175,7 +175,7 @@ const rootReducer = (state = initialState, action) => {
           } else {
             filterApi.forEach((poke) => {
               if (
-                poke.types.indexOf(action.payload) >= 0 && !poke.createdInDB //si hay un filtro y poke no es de la DB
+                poke.types.indexOf(action.payload) >= 0 && !poke.createdInDB //si los tpyes de poke estan dentro del type elegido y poke no es de la DB
               ) {
                 //y si hay resultados para ese filtro
                 result.push(poke); //empujo a result cada uno de los resultados

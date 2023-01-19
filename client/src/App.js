@@ -8,10 +8,11 @@ import Pokemons from './components/Pokemons/Pokemons';
 import Detail from './components/Detail/Detail';
 //import Error from './components/404/Error';
 import Update from './components/Detail/Update';
-//import { MainDetail } from './components/Detail/MainDetail';
-
 
 import { Route } from 'react-router-dom';
+
+import axios from 'axios';
+axios.defaults.baseURL =  'http://localhost:3001/';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
       <Route exact path='/pokemons/:id' component={Detail} />
       <Route exact path='/create' component={Create} />
       <Route exact path='/pokemons/:id/edit' component={Update} />
-      {/*<Route path='*' component={Error} />*/}
+     {/* <Route path='*' component={Error} /> */}
 
     </div>
   );

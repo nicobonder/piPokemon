@@ -12,7 +12,7 @@
 }
 
 .pokeDetail{
-    height: 97vh;
+    height: 65vh;
     width: 20rem;
     margin: 1rem;
     padding: 0.5rem;
@@ -114,13 +114,5 @@
 }
 
 .btnNot{
-    appearance: none;
-    outline: none;
-    border: none;
-    font-size: 0.8rem;
-    border-radius: 0.8rem;
-    position: relative;
-    line-height: 1.5rem;
-    width: 7rem;
-    margin: 1rem 0.5rem;
+    display: none;
 }

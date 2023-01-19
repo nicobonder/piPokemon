@@ -28,6 +28,8 @@ export default function Filters({ setCurrentPage }) {
     e.preventDefault();
     console.log("resetear filtros");
     dispatch(actions.getPokemons());
+    dispatch(actions.cleanFilter())
+    
     setCurrentPage(1);
     setSelectValue(""); //blanquea los estados locales
     setSelectValueB("");
@@ -65,7 +67,7 @@ export default function Filters({ setCurrentPage }) {
     e.preventDefault();
     const value = e.target.value;
     dispatch(actions.sortByAttack(value));
-    setOrdenB(`Sorted by ${value}`);
+    setOrdenB(`Sorted from ${value}`);
     history.push("/pokemons");
     setCurrentPage(1);
   }

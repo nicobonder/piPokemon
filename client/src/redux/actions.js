@@ -84,7 +84,7 @@ export const getTypes = () => {
     }
 }
 
-export const filterByCreated = (value) => { //el payload va a ser aí, db o all. Depende de lo q eleija el usuario
+export const filterByCreated = (value) => { //el payload va a ser api, db o all. Depende de lo q eleija el usuario
     return {type: FILTER_BY_CREATED, payload: value}
 }
 
