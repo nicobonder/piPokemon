@@ -116,3 +116,19 @@
 .btnNot{
     display: none;
 }
+
+.loading{
+    display: flex;
+    flex-direction: column;
+    margin-left: 6rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.loading img{
+    width: 8rem;
+    height: 8rem;   
+    margin-top: -9rem;
+    animation: load 2.5s infinite linear;
+}
