@@ -79,7 +79,7 @@ export const deletePokemon = (pokemonId) => {
 
 export const getTypes = () => {
     return async function(dispatch){
-        let info = await axios.get('http://localhost:3001/types', {})
+        let info = await axios.get('/types', {})
         return dispatch({type: GET_TYPES, payload: info.data})
     }
 }
