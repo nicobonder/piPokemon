@@ -35,6 +35,28 @@
     .PokeTitle{
         margin: 0.5rem;
     }
+
+    .loading{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        background-image: url(../Home/pokeStadium1.jpg);
+        height: 100vh;
+
+    }
+
+    .loading img{
+        width: 7rem;
+        height: 7rem;   
+        animation: load 2.5s infinite linear;
+    }
+
+    @keyframes load {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(359deg);}
+    }
 }
 
 /*de 640 a 768*/
@@ -63,6 +85,27 @@
 
     .PokeTitle{
         margin: 0.5rem;
+    }
+
+    .loading{
+        display: flex;
+        flex-direction: column;
+        margin-left: 6rem;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .loading img{
+        width: 7rem;
+        height: 7rem;   
+        margin-top: 10rem;
+        animation: load 2.5s infinite linear;
+    }
+
+    @keyframes load {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(359deg);}
     }
 }
 
@@ -96,6 +139,27 @@
 
     .PokeTitle{
         margin: 0.5rem;
+    }
+
+    .loading{
+        display: flex;
+        flex-direction: column;
+        margin-left: 6rem;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .loading img{
+        width: 8rem;
+        height: 8rem;   
+        margin-top: 12rem;
+        animation: load 2.5s infinite linear;
+    }
+
+    @keyframes load {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(359deg);}
     }
 }
 
@@ -135,7 +199,6 @@
         
         z-index: 5;
     }
-
 
     .PokeTitle{
         margin: 0.5rem;
