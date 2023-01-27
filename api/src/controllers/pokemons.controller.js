@@ -67,6 +67,7 @@ const getDBInfo = async () => {
 }
 
 const getAllPokemons = async () => {
+    
     let allPokemons = [];
     let apiPokemons =  await getApiInfo();
     let dbPokemons = await getDBInfo();

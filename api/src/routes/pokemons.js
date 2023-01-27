@@ -12,6 +12,7 @@ const {
 //const router = require("express").Router();
 
 router.get('/', async (req, res) => {
+    console.log('trying get all pokes')
     const { name } = req.query;
     //Obtengo todos los pokemons con la funcion getAllPokemons
     let allPokemons = await getAllPokemons();
@@ -25,6 +26,7 @@ router.get('/', async (req, res) => {
             }
         } else {
             res.status(200).send(allPokemons)
+            
         }
     } catch(error){
         return res.status(500).json({ message: error.message })
