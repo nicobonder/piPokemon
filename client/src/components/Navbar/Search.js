@@ -3,6 +3,9 @@ import s from './SearchBar.module.css'
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as actions from "../../redux/actions";
+import ErrorPokemon from './ErrorPokemon.jpeg';
+
+import Swal from 'sweetalert2';
 
 export default function Search() {
   const [name, setName] = useState("")
@@ -10,28 +13,58 @@ export default function Search() {
   const history = useHistory();
   const pokemons = useSelector((state)=> state.allPokemons); //estado global con todos los Pokes
   
+
+  const showAlertNoEnter=()=> {
+    Swal.fire({
+      //icon:'warning',
+      imageUrl: ErrorPokemon,
+      imageHeight: 150,
+      imageWidth: 200,
+      imageAlt: 'There was an error.',
+      title: 'Pokemon App Searcher', 
+      html:'<h3>Please, enter some name</p>', 
+      footer:'<p>Try again.</p>'
+    }
+    )
+  }
+
+  const showAlertNoName=()=> {
+    Swal.fire({
+      //icon:'warning',
+      imageUrl: ErrorPokemon,
+      imageHeight: 150,
+      imageWidth: 200,
+      imageAlt: 'There was an error.',
+      title: 'Pokemon App Searcher', 
+      html:'<h3>That Pokemon doesnt exist</p>', 
+      footer:'<p>Try again.</p>'
+    }
+    )
+  }
+
   function handleInputChange(e) { //setea el name con lo que va escribiendo el usuario
     e.preventDefault();
     setName(e.target.value)
     console.log('search', e.target.value)
   }
 
-  function handleSearch(e) {
-    e.preventDefault();
-    console.log('pokemons en search', pokemons)
-    let findPoke = pokemons.find((poke) => poke.name.toLowerCase() === name.toLowerCase()) //busca el nombre dentro de la array de pokemons
-    console.log('findPoke en search', findPoke)
-    if(!name){
-      alert('Please, enter some name');
-    }
-    if(findPoke){
-      dispatch(actions.searchPokemon(name)); //si lo encuentra se dispara la accion
-      history.push(`/pokemons/${findPoke.id}`); //despues redirige para ver el poke
-    } else if(!findPoke){
-      alert('That Pokemon doesnt exist')
-    }
-    setName(''); //vacia el input
+ function handleSearch(e) {
+  e.preventDefault();
+  console.log('pokemons en search', pokemons)
+  if (!name) {
+    showAlertNoEnter();
+    return;
   }
+  let findPoke = pokemons.find((poke) => poke.name.toLowerCase() === name.toLowerCase());
+  console.log('findPoke en search', findPoke);
+  if (findPoke) {
+    dispatch(actions.searchPokemon(name));
+    history.push(`/pokemons/${findPoke.id}`);
+  } else {
+    showAlertNoName();
+  }
+  setName(''); //vacia el input
+}
 
   return (
     <div className={s.searchContainer}>

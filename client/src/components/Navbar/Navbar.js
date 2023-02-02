@@ -1,20 +1,28 @@
 import React
- from 'react'
+, { useState } from 'react'
 import { NavLink, Link } from "react-router-dom";
 import logo from './pokeLogo.png'
 import Search from './Search';
-import s from './Navbar.module.css'
-import * as actions from "../../redux/actions";
+import './Navbar.css'
+//import * as actions from "../../redux/actions";
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={s.navbarSection}>
-      <Link className={s.logo} to='/'><img className={s.logo} src={logo} alt="logo Pokemon" /></Link>
-      <nav className={s.links}>
-          <NavLink className={s.link} to='/pokemons'><i className="fa-solid fa-bowling-ball"></i> Pokemons</NavLink>
-          <NavLink className={s.link} to='/create'><i className="fa-solid fa-plus"></i> Create your Pokemon</NavLink>
+    <div className="navbarSection">
+      <Link to='/'><img className="logo" src={logo} alt="logo Pokemon" /></Link>
+      <nav className={`nav_links ${isOpen && "open"}`}>
+          <NavLink className="navbar_menu_link" to='/pokemons'><i className="fa-solid fa-bowling-ball"></i> Pokemons</NavLink>
+          <NavLink className="navbar_menu_link" to='/create'><i className="fa-solid fa-plus"></i> Create your Pokemon</NavLink>
         </nav>
+        <div className={`nav_toggle ${isOpen && "open"}`}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
       <Search />
     </div>
     
