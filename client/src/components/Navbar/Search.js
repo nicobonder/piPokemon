@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import s from './SearchBar.module.css'
+//import s from './SearchBar.module.css'
+import './SearchBar.css'
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import * as actions from "../../redux/actions";
-import ErrorPokemon from './ErrorPokemon.jpeg';
 
 import Swal from 'sweetalert2';
+import ErrorPokemon from './ErrorPokemon.jpeg';
 
 export default function Search() {
   const [name, setName] = useState("")
@@ -67,15 +68,15 @@ export default function Search() {
 }
 
   return (
-    <div className={s.searchContainer}>
+    <div className="searchContainer">
       <input 
-        className={s.searchBar} 
+        className="searchBar" 
         type='text' 
         placeholder= "Search by name"
         onChange={(e) => handleInputChange(e)} 
         value={name} 
       />
-      <button className={s.btnSearch} onClick={(e) => handleSearch(e)}>GO</button>
+      <button className="btnSearch" onClick={(e) => handleSearch(e)}>GO</button>
     </div>
      
   )
