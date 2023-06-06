@@ -49,6 +49,7 @@ router.get('/:id', async (req, res) =>{
 //Ruta de creacion
 router.post('/', (createPokemon));
 //Ruta ruta para actualizar un pokemon
+
 router.put('/:id', (req, res) => {
     const pokeId = req.params.id;
     const updates = req.body;
